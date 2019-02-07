@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:09:12 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/07 17:53:44 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/07 20:08:34 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,11 @@ t_room			*room_del(t_room *start)
 			free(start->links);
 			start->links = NULL;
 		}
+		if (start->steps)
+		{
+			free(start->steps);
+			start->steps = NULL;
+		}
 		free(start);
 		start = tmp;
 	}
@@ -72,10 +77,13 @@ t_room		**link_add(t_room *links, int size, t_room *new)
 {
 	int		i;
 	t_room	**tmp;
+	int		*tmp_int;
 
 	tmp = links->links;
-	if (!(links->links = (t_room **)malloc(sizeof(t_room *) * (size + 1))) ||
-		!(links->steps = (int *)malloc(sizeof(int) * (size + 1))))
+	if (!(links->links = (t_room **)malloc(sizeof(t_room *) * (size + 1))))
+		STOP;
+	tmp_int = links->steps;
+	if (!(links->steps = (int *)malloc(sizeof(int) * (size + 1))))
 		STOP;
 	i = -1;
 	while (++i < size)
@@ -86,6 +94,8 @@ t_room		**link_add(t_room *links, int size, t_room *new)
 	links->links[size] = new;
 	links->steps[size] = -1;
 	free(tmp);
+	if (!tmp_int)
+		free(tmp_int);
 	return (links->links);
 }
 

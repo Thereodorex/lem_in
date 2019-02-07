@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/07 18:56:06 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/07 19:42:02 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,14 +48,21 @@ typedef struct	s_param
 	int		ways_count;
 }				t_param;
 
+typedef struct	s_turn
+{
+	t_room			*room;
+	struct s_turn	*next;
+}				t_turn;
+
 t_room			*room_new(char *name, int x, int y);
 t_room			*farm_pushback(t_room *start, t_room *new);
 t_room			*room_del(t_room *start);
 void			farm_link(t_room *room1, t_room *room2);
 
 
-t_room			*ft_init_rooms(void);
+t_room			*ft_init_rooms(int ants);
 void			ft_print_rooms(t_room *start);
 void			ft_init_len(t_room *start);
+void			ft_sotr_len(t_room *this);
 
 #endif
