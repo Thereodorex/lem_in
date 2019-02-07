@@ -66,5 +66,8 @@ void			ft_print_rooms(t_room *start);
 void			ft_init_len(t_room *start);
 void			ft_sotr_len(t_room *this);
 t_turn			*ft_init_turn_ant(int size, t_room *start);
+int				ft_corr_rooms(t_room *start);
+int				ft_muve_turn(t_turn *turn);
+void			ft_free_turn(t_turn *turn);
 
 #endif
