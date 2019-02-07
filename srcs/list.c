@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:09:12 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/07 11:26:25 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/07 16:32:51 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,11 +18,11 @@ t_room			*room_new(char *name, int x, int y)
 
 	if (!(new = (t_room *)malloc(sizeof(t_room))))
 		STOP;
-	new->name = ft_strdup(name);
+	new->name = name;
 	new->x = x;
 	new->y = y;
 	new->ants = 0;
-	new->size = 0;
+	new->link_size = 0;
 	new->next = NULL;
 	new->links = NULL;
 	return (new);
@@ -84,6 +84,6 @@ t_room		**link_add(t_room **links, int size, t_room *new)
 
 void		farm_link(t_room *room1, t_room *room2)
 {
-	room1->links = link_add(room1->links, room1->size++, room2);
-	room2->links = link_add(room2->links, room2->size++, room1);
+	room1->links = link_add(room1->links, room1->link_size++, room2);
+	room2->links = link_add(room2->links, room2->link_size++, room1);
 }
