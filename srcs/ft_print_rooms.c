@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 17:26:32 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/07 17:30:47 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/07 18:52:30 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,11 +21,12 @@ void	ft_print_rooms(t_room *start)
 		return ;
 	while (start)
 	{
-		ft_printf("room.name=%s\n", start->name);
+		ft_printf("room.name=%s %s\n", start->name,
+		(start->flag == 0 ? "" : (start->flag == 1 ? "Start" : "End")));
 		index = -1;
 		while (++index < start->link_size)
-			ft_printf("\tlink with %s\n",
-			start->links[index]->name);
+			ft_printf("\t->%s:%d\n",
+			start->links[index]->name, start->steps[index]);
 		start = start->next;
 	}
 	return ;

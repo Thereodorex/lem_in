@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:09:12 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/07 16:32:51 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/07 17:53:44 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ t_room			*room_new(char *name, int x, int y)
 	new->link_size = 0;
 	new->next = NULL;
 	new->links = NULL;
+	new->visited = 0;
+	new->flag = 0;
 	return (new);
 }
 
@@ -66,24 +68,29 @@ t_room			*room_del(t_room *start)
 	return (NULL);
 }
 
-t_room		**link_add(t_room **links, int size, t_room *new)
+t_room		**link_add(t_room *links, int size, t_room *new)
 {
 	int		i;
 	t_room	**tmp;
 
-	tmp = links;
-	if (!(links = (t_room **)malloc(sizeof(t_room *) * (size + 1))))
+	tmp = links->links;
+	if (!(links->links = (t_room **)malloc(sizeof(t_room *) * (size + 1))) ||
+		!(links->steps = (int *)malloc(sizeof(int) * (size + 1))))
 		STOP;
 	i = -1;
 	while (++i < size)
-		links[i] = tmp[i];
-	links[size] = new;
+	{
+		links->links[i] = tmp[i];
+		links->steps[i] = -1;
+	}
+	links->links[size] = new;
+	links->steps[size] = -1;
 	free(tmp);
-	return (links);
+	return (links->links);
 }
 
 void		farm_link(t_room *room1, t_room *room2)
 {
-	room1->links = link_add(room1->links, room1->link_size++, room2);
-	room2->links = link_add(room2->links, room2->link_size++, room1);
+	room1->links = link_add(room1, room1->link_size++, room2);
+	room2->links = link_add(room2, room2->link_size++, room1);
 }
