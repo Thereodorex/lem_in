@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:09:12 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/07 20:08:34 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/07 20:36:25 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,8 +94,7 @@ t_room		**link_add(t_room *links, int size, t_room *new)
 	links->links[size] = new;
 	links->steps[size] = -1;
 	free(tmp);
-	if (!tmp_int)
-		free(tmp_int);
+	free(tmp_int);
 	return (links->links);
 }
 

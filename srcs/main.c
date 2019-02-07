@@ -6,74 +6,92 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/07 20:22:03 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/07 21:33:20 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-t_turn	*ft_turn_add(t_turn *turn, t_room *new)
-{
-	t_turn *ptr;
-	t_turn *start;
-
-	start = turn;
-	ptr = (t_turn *)malloc(sizeof(t_turn));
-	ptr->room = new;
-	ptr->next = NULL;
-	if (!turn)
-		return (ptr);
-	while (turn->next != NULL)
-		turn = turn->next;
-	turn->next = ptr;
-	return (start);
-}
-
-t_room	*ft_turn_get(t_turn **turn)
-{
-	t_room	*ptr;
-
-	if (!turn)
-		return (NULL);
-	ptr = (*turn)->room;
-	*turn = (*turn)->next;
-	return (ptr);
-}
-
-void	ft_start_ant(t_turn **turn)
+int		ft_muve_ant(t_turn *turn, t_room *room, int ant_wait)
 {
 	int		index;
-	t_room	*room;
 
-	index = -1;
-	room = ft_turn_get(turn);
-	while (++index < room->link_size && room->ants > 0)
+	if (room->links[0]->ants == 0 ||
+		room->links[0]->flag == -1)
 	{
-		if ((room->links[index]->ants == 0) ||
+		ft_printf("%s-%s ", turn->name, room->links[0]->name);
+		room->ants--;
+		room->links[0]->ants++;
+		turn->room = room->links[0];
+		return (1);
+	}
+	index = 0;
+	while (++index < room->link_size)
+	{
+		if ((room->links[index]->ants == 0 && ((room->steps[index - 1] + 1 + ant_wait) >= room->steps[index])) ||
 			room->links[index]->flag == -1)
 		{
-			ft_printf("%s->%s\n", room->name, room->links[index]->name);
-			if (room->links[index]->flag != -1)
-				*turn = ft_turn_add(*turn, room->links[index]);
-			room->links[index]->ants += 1;
-			room->ants -= 1;
+			ft_printf("%s-%s ", turn->name, room->links[index]->name);
+			room->ants--;
+			room->links[index]->ants++;
+			turn->room = room->links[index];
+			return (1);
 		}
 	}
+	return (0);
+}
 
+int		ft_muve_turn(t_turn *turn)
+{
+	t_room	*room;
+	int		index;
+	int		step;
+	int		ant_wait;
+
+	step = 0;
+	ant_wait = 0;
+	while (turn != NULL)
+	{
+		room = turn->room;
+		index = -1;
+		if (room->flag != -1)
+		{
+			if (ft_muve_ant(turn, room, ant_wait))
+			{
+				step++;
+			}
+			else
+				ant_wait++;
+		}
+		turn = turn->next;
+	}
+	return (step);
 }
 
 int		main()
 {
 	t_room	*start;
+	int		ants;
 	t_turn	*turn;
+	t_turn	*ptr;
 
-	start =	ft_init_rooms(2);
+	ants = 3;
+	start =	ft_init_rooms(ants);
 	ft_init_len(start);
 	ft_sotr_len(start);
-	ft_print_rooms(start);
-	turn = ft_turn_add(turn, start);
+//	ft_print_rooms(start);
+	turn = ft_init_turn_ant(ants, start);
+	while (ft_muve_turn(turn) > 0)
+		ft_printf("\n");
 	while (turn != NULL)
-		ft_start_ant(&turn);
+	{
+		ptr = turn;
+//		ft_printf("%s %s\n", turn->name, turn->room->name);
+		turn = turn->next;
+		free(ptr->name);
+		free(ptr);
+	}
+//	ft_print_rooms(start);
 	room_del(start);
 	return (0);
 }
