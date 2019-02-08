@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 14:09:43 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 14:45:25 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 # include "get_next_line.h"
 # include "ft_printf.h"
 
+# define MOD(x) (x < 0 ? -x : x)
 # define STOP {ft_printf("MALLOC ERROR\n"); exit(0);}
+# define STOP_IN {ft_printf("ERROR\n"); exit(0);}
 
 typedef struct	s_room
 {
@@ -26,7 +28,7 @@ typedef struct	s_room
 	int				y;
 	int				ants;
 	struct s_room	*next;
-	int				link_size;
+	int				size;
 	struct s_room	**links;
 	int				*steps;
 	int				visited;
@@ -56,10 +58,20 @@ typedef struct	s_turn
 }				t_turn;
 
 t_room			*room_new(char *name, int x, int y);
-t_room			*farm_pushback(t_room *start, t_room *new);
+t_room			*room_pushback(t_room *start, t_room *new);
 t_room			*room_del(t_room *start);
-void			farm_link(t_room *room1, t_room *room2);
+t_room			**link_add(t_room **links, int size, t_room *new);
+void			room_link(t_room *room1, t_room *room2);
 
+void			read_data(t_param *p);
+int				check_room(t_param *p, char *line);
+int				check_link(char *line);
+int				check_num(char  *line);
+t_room			*pars_room(t_param *p, char *line);
+
+
+
+//void			farm_link(t_room *room1, t_room *room2);
 
 t_room			*ft_init_rooms(int ants);
 void			ft_print_rooms(t_room *start);
