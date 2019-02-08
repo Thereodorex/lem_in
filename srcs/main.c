@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 14:33:10 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 21:56:02 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	print_room(t_param *p, t_room *r)
 	printf("\n");
 	printf("coord: %d %d\n", r->x, r->y);
 	printf("ants: %d\n", r->ants);
-	printf("steps: %d\n", r->steps);
+//	printf("steps: %d\n", r->steps);
 	printf("links: %d\n", r->size);
 	i = -1;
 	while (++i < r->size)
@@ -45,6 +45,8 @@ void	print_farm(t_param *p)
 	t_room	*cur;
 
 	cur = p->start;
+	ft_print_rooms(cur);
+	return ;
 	printf("\n");
 	while (cur)
 	{
@@ -56,12 +58,23 @@ void	print_farm(t_param *p)
 int		main(int argc, char **argv)
 {
 	t_param		p;
+	t_turn		*turn;
 
-	rrhaenys_main(argc, argv);
+//	rrhaenys_main(argc, argv);
 //	ft_open_win(argv[0]);
 	param_init(&p);
 	read_data(&p);
+	ft_init_len(&p);
+	ft_sotr_len(p.start);
+	if (ft_corr_rooms(p.end) == 0)
+	{
+		ft_printf("There is no way!\n");
+		exit(0);
+	}
 	print_farm(&p);
+	turn = ft_init_turn_ant(p.ants, p.start);
+	while (ft_muve_turn(turn) > 0)
+		ft_printf("\n");
 	room_del(p.start);
 	return (0);
 }

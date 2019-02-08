@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 23:03:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 14:07:44 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:35:21 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,12 +29,14 @@ static void		check_sharp(t_param *p, char *line)
 	{
 		tmp->next = p->start;
 		p->start = tmp;
+		p->start->flag = 1;
 	}
 	else if (!ft_strcmp(line, "##end"))
 	{
 		if (p->end)
 			STOP_IN;
 		p->end = tmp;
+		p->end->flag = -1;
 		p->start = room_pushback(p->start, tmp);
 	}
 	else

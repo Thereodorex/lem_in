@@ -1,6 +1,8 @@
 {
 	"files.associations": {
 		"lem_in.h": "c",
-		"main.h": "c"
+		"main.h": "c",
+		"libft.h": "c",
+		"ft_printf.h": "c"
 	}
 }

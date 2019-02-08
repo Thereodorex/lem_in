@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:09:12 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 13:19:12 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/08 15:33:19 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ t_room			*room_new(char *name, int x, int y)
 	new->y = y;
 	new->ants = 0;
 	new->size = 0;
-	new->steps = 0;
 	new->next = NULL;
 	new->links = NULL;
+	new->flag = 0;
 	return (new);
 }
 
@@ -84,8 +84,25 @@ t_room		**link_add(t_room **links, int size, t_room *new)
 	return (links);
 }
 
+int			*step_add(int *steps, int size)
+{
+	int		i;
+	int		*tmp;
+
+	tmp = steps;
+	if (!(steps = (int *)malloc(sizeof(int) * (size + 1))))
+		STOP;
+	i = -1;
+	while (++i <= size)
+		steps[i] = -1;
+//	free(tmp);
+	return (steps);
+}
+
 void		room_link(t_room *room1, t_room *room2)
 {
 	room1->links = link_add(room1->links, (room1->size)++, room2);
 	room2->links = link_add(room2->links, (room2->size)++, room1);
+	room1->steps = step_add(room1->steps, (room1->size - 1));
+	room2->steps = step_add(room2->steps, (room2->size - 1));
 }

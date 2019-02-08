@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 14:45:25 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 21:55:12 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,10 +73,10 @@ t_room			*pars_room(t_param *p, char *line);
 
 //void			farm_link(t_room *room1, t_room *room2);
 
+void			ft_sotr_len(t_room *this);
 t_room			*ft_init_rooms(int ants);
 void			ft_print_rooms(t_room *start);
-void			ft_init_len(t_room *start);
-void			ft_sotr_len(t_room *this);
+void			ft_init_len(t_param *start);
 t_turn			*ft_init_turn_ant(int size, t_room *start);
 int				ft_corr_rooms(t_room *start);
 void			ft_free_turn(t_turn *turn);

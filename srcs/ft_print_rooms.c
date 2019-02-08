@@ -1,24 +1,34 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_corr_rooms.c                                    :+:      :+:    :+:   */
+/*   ft_print_rooms.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2019/02/08 14:06:48 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/08 15:36:42 by rrhaenys         ###   ########.fr       */
+/*   Created: 2019/02/08 15:29:27 by rrhaenys          #+#    #+#             */
+/*   Updated: 2019/02/08 15:30:24 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-int		ft_corr_rooms(t_room *end)
+void	ft_print_rooms(t_room *start)
 {
-	int	index;
+	t_room	*tmp;
+	int		index;
 
-	index = -1;
-	while (++index < end->size)
-		if (end->steps[index] >= 0)
-			return (1);
-	return (0);
+	if (!start)
+		return ;
+	while (start)
+	{
+		ft_printf("room.name=%s ants=%d %s\n", start->name,
+		start->ants,
+		(start->flag == 0 ? "" : (start->flag == 1 ? "Start" : "End")));
+		index = -1;
+		while (++index < start->size)
+			ft_printf("\t->%s:%d\n",
+			start->links[index]->name, start->steps[index]);
+		start = start->next;
+	}
+	return ;
 }
