@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:57:09 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/08 21:52:14 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 23:43:58 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,16 @@ static int		ft_get_min_len(t_room *this)
 	return (min);
 }
 
+static void		ft_toroom(t_room *this, t_room *me, int len)
+{
+	int	index;
+
+	index = -1;
+	while (++index < this->size)
+		if (this->links[index] == me)
+			this->steps[index] = len;
+}
+
 static int		ft_init_len1(t_room *this, int len)
 {
 	int	index;
@@ -42,7 +52,11 @@ static int		ft_init_len1(t_room *this, int len)
 	while (++index < this->size)
 	{
 		if (this->steps[index] == -1)
+		{
 			this->steps[index] = ft_init_len1(this->links[index], len);
+			if (this->steps[index] != -1)
+				ft_toroom(this->links[index], this, this->steps[index] + 1);
+		}
 		if (this->steps[index] != -1)
 		{
 			if (min == -1)
@@ -62,7 +76,7 @@ static int	ft_init_len2(t_room *this)
 
 	index = -1;
 	min = -1;
-	ft_printf("%s\n", this->name);
+	ft_printf("s %s\n", this->name);
 	while (++index < this->size)
 	{
 		if (this->steps[index] == -1)
@@ -72,6 +86,7 @@ static int	ft_init_len2(t_room *this)
 		else if (min > this->steps[index])
 			min = this->steps[index];
 	}
+	ft_printf("f %s\n", this->name);
 	return (min);
 }
 
@@ -80,10 +95,10 @@ void		ft_init_len(t_param *p)
 	t_room	*room;
 
 	ft_init_len1(p->start, 0);
-	room = p->start;
+/*	room = p->start;
 	while (room != NULL)
 	{
 		ft_init_len2(room);
 		room = room->next;
-	}
+	}*/
 }

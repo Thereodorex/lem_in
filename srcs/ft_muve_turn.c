@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:08:04 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/08 23:02:35 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 23:50:29 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,9 @@ int		ft_muve_ant(t_turn *turn, t_room *room, int ant_wait)
 {
 	int		index;
 
-	if (room->links[0]->ants == 0 ||
-		room->links[0]->flag == -1)
+	if ((room->links[0]->ants == 0 ||
+		room->links[0]->flag == -1) &&
+		room->steps[0] >= 0)
 	{
 		ft_printf("%s-%s ", turn->name, room->links[0]->name);
 		room->ants--;
@@ -28,6 +29,8 @@ int		ft_muve_ant(t_turn *turn, t_room *room, int ant_wait)
 	index = 0;
 	while (++index < room->size)
 	{
+		if (room->steps[index] < 0)
+			continue ;
 		if (room->links[index]->flag == -1)
 		{
 			ft_printf("%s-%s ", turn->name, room->links[index]->name);
