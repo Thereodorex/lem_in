@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 23:48:08 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/09 00:22:10 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ int		main(int argc, char **argv)
 		ft_printf("There is no way!\n");
 		exit(0);
 	}
-	print_farm(&p);
+//	print_farm(&p);
 	turn = ft_init_turn_ant(p.ants, p.start);
 	while (ft_muve_turn(turn) > 0)
 		ft_printf("\n");
