@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 21:41:29 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 13:28:33 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/08 13:51:20 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,14 @@ static void		pars_ants(t_param *p, char **line)
 		STOP;
 }
 
+static void		check_name(t_room *start, char *line)
+{
+	while (start && ft_strcmp(start->name, line))
+		start = start->next;
+	if (start)
+		STOP_IN;
+}
+
 t_room			*pars_room(t_param *p, char *line)
 {
 	char	*ptr;
@@ -57,6 +65,7 @@ t_room			*pars_room(t_param *p, char *line)
 	while (*ptr != ' ')
 		++ptr;
 	*ptr++ = '\0';
+	check_name(p->start, line);
 	if (check_num(ptr))
 		STOP_IN;
 	x = ft_atoi(ptr);

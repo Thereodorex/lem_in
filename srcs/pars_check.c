@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 23:03:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 13:03:08 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/08 14:07:44 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,14 +18,15 @@ static void		check_sharp(t_param *p, char *line)
 	char		*line2;
 	t_room		*tmp;
 
+	if (!ft_strcmp(line, "##start") && ++start != 1)
+		STOP_IN;
 	if ((get_next_line(0, &line2)) == -1)
 		STOP;
-	check_room(p, line2);
+	if ((check_room(p, line2)) != 1)
+		STOP_IN;
 	tmp = pars_room(p, line2);
 	if (!ft_strcmp(line, "##start"))
 	{
-		if (++start != 1)
-			STOP_IN;
 		tmp->next = p->start;
 		p->start = tmp;
 	}

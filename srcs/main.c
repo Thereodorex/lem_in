@@ -6,17 +6,29 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 13:19:09 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/08 14:11:59 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-void	print_room(t_room *r)
+void	param_init(t_param *p)
+{
+	p->start = NULL;
+	p->end = NULL;
+	p->ants = 0;
+}
+
+void	print_room(t_param *p, t_room *r)
 {
 	int		i;
 
-	printf("name: %s\n", r->name);
+	printf("name: %s ", r->name);
+	if (p->start == r)
+		printf("(start)");
+	else if (p->end == r)
+		printf("(end)");
+	printf("\n");
 	printf("coord: %d %d\n", r->x, r->y);
 	printf("ants: %d\n", r->ants);
 	printf("steps: %d\n", r->steps);
@@ -32,9 +44,10 @@ void	print_farm(t_param *p)
 	t_room	*cur;
 
 	cur = p->start;
+	printf("\n");
 	while (cur)
 	{
-		print_room(cur);
+		print_room(p, cur);
 		cur = cur->next;
 	}
 }
@@ -43,6 +56,7 @@ int		main()
 {
 	t_param		p;
 
+	param_init(&p);
 	read_data(&p);
 	print_farm(&p);
 	room_del(p.start);
