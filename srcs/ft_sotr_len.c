@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 19:18:41 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/07 19:19:22 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 13:25:12 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,10 @@ void		ft_sotr_len(t_room *this)
 	if (this->visited == 1)
 		return ;
 	this->visited = 1;
-	index = -1;
 	size = this->link_size + 1;
 	while (--size > 0)
 	{
+		index = -1;
 		max = 0;
 		while (++index < size)
 		{

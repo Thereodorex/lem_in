@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 20:51:31 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/07 20:51:43 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 13:22:21 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ t_turn	*ft_init_turn_ant(int size, t_room *start)
 
 	index = -1;
 	turn = NULL;
-	while(++index < size)
+	while (++index < size)
 	{
 		name = ft_strdup("L");
 		num = ft_itoa(index + 1);

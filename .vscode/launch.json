@@ -5,12 +5,16 @@
 	"version": "0.2.0",
 	"configurations": [
 		{
-			"type": "lldb",
+			"name": "(lldb) Launch",
+			"type": "cppdbg",
 			"request": "launch",
-			"name": "Debug",
 			"program": "${workspaceFolder}/lem-in",
-			"args": [],
-			"cwd": "${workspaceFolder}"
+			"args": ["5"],
+			"stopAtEntry": false,
+			"cwd": "${workspaceFolder}",
+			"environment": [],
+			"externalConsole": true,
+			"MIMode": "lldb"
 		}
 	]
 }
