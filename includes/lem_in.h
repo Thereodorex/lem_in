@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/07 20:58:00 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 14:09:43 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,5 +66,9 @@ void			ft_print_rooms(t_room *start);
 void			ft_init_len(t_room *start);
 void			ft_sotr_len(t_room *this);
 t_turn			*ft_init_turn_ant(int size, t_room *start);
+int				ft_corr_rooms(t_room *start);
+void			ft_free_turn(t_turn *turn);
+int				ft_muve_turn(t_turn *turn);
+int				rrhaenys_main(int argc, char **argv);
 
 #endif
