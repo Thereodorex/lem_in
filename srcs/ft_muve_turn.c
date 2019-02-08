@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/08 14:08:04 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/08 19:05:24 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/08 23:02:35 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int		ft_muve_ant(t_turn *turn, t_room *room, int ant_wait)
 	int		index;
 
 	if (room->links[0]->ants == 0 ||
-		room->links[0]->flag != 0)
+		room->links[0]->flag == -1)
 	{
 		ft_printf("%s-%s ", turn->name, room->links[0]->name);
 		room->ants--;
@@ -28,7 +28,7 @@ int		ft_muve_ant(t_turn *turn, t_room *room, int ant_wait)
 	index = 0;
 	while (++index < room->size)
 	{
-		if (room->links[index]->flag != 0)
+		if (room->links[index]->flag == -1)
 		{
 			ft_printf("%s-%s ", turn->name, room->links[index]->name);
 			room->ants--;
@@ -36,7 +36,7 @@ int		ft_muve_ant(t_turn *turn, t_room *room, int ant_wait)
 			turn->room = room->links[index];
 			return (1);
 		}
-		if (room->links[index]->ants == 0)
+		if (room->links[index]->ants == 0 && room->links[index]->flag == 0)
 		{
 			if ((room->steps[index - 1] + 1 + ant_wait) >= room->steps[index])
 			{
