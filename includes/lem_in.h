@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/09 06:15:45 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/09 06:34:24 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,13 @@ typedef struct	s_way
 	struct s_way	*next;
 }				t_way;
 
+typedef struct	s_ways
+{
+	t_way			**way;
+	int				size;
+	struct s_ways	*next;
+}				t_ways;
+
 typedef struct	s_param
 {
 	int		ants;
@@ -63,6 +70,6 @@ int				check_num(char  *line);
 t_room			*pars_room(t_param *p, char *line);
 
 
-t_way			*a_star(t_room *start, t_room *end);
+t_way			*a_star(t_room *start, t_room *end, t_room *old_room);
 
 #endif

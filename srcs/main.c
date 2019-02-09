@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/09 06:22:37 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/09 06:31:36 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,22 +85,35 @@ t_room	**ft_get_rooms(t_param *p, int size)
 	return (rooms);
 }
 
+void	ft_print_way(char *str, t_way *way)
+{
+	while (way != NULL)
+	{
+		ft_printf("%s way=%s\n", str, way->room->name);
+		way = way->next;
+	}
+	ft_putendl("");
+}
+
 int		main(int argc, char **argv)
 {
 	t_param		p;
 	t_room		**rooms;
 	int			rooms_count;
 	t_way		*way;
+	t_way		*new_way;
 
 	param_init(&p);
 	read_data(&p);
 	print_farm(&p);
 	rooms_count = ft_get_size(&p);
 	rooms = ft_get_rooms(&p, rooms_count);
-	way = a_star(p.start, p.end);
+	way = a_star(p.start, p.end, NULL);
+	ft_print_way("way", way);
 	while (way != NULL)
 	{
-		ft_printf("way=%s\n", way->room->name);
+		new_way = a_star(p.start, p.end, way->room);
+		ft_print_way("new_way", new_way);
 		way = way->next;
 	}
 	room_del(p.start);

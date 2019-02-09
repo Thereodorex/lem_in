@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 04:06:41 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/09 06:24:06 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/09 06:26:09 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ t_way	*return_way(t_room *current, t_way *way)
 	return (ret);
 }
 
-t_way	*a_star(t_room *start, t_room *end)
+t_way	*a_star(t_room *start, t_room *end, t_room *old_room)
 {
 	t_way	*frontier;
 	t_way	*old;
@@ -100,6 +100,8 @@ t_way	*a_star(t_room *start, t_room *end)
 	frontier = NULL;
 	old = NULL;
 	way = NULL;
+	if (old_room != NULL)
+		old = way_push(old, old_room, NULL);
 	frontier = way_push(frontier, start, NULL);
 	way = way_push(way, start, NULL);
 	while (frontier != NULL)
