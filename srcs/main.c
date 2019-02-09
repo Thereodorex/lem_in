@@ -6,12 +6,11 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/09 00:22:10 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/09 06:22:37 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-#include "main.h"
 
 void	param_init(t_param *p)
 {
@@ -45,8 +44,6 @@ void	print_farm(t_param *p)
 	t_room	*cur;
 
 	cur = p->start;
-	ft_print_rooms(cur);
-	return ;
 	printf("\n");
 	while (cur)
 	{
@@ -55,26 +52,58 @@ void	print_farm(t_param *p)
 	}
 }
 
+int		ft_get_size(t_param *p)
+{
+	t_room	*cur;
+	int		size;
+
+	size = 0;
+	cur = p->start;
+	while (cur)
+	{
+		size++;
+		cur = cur->next;
+	}
+	return (size);
+}
+
+t_room	**ft_get_rooms(t_param *p, int size)
+{
+	t_room	*cur;
+	t_room	**rooms;
+	int		index;
+
+	rooms = (t_room **)malloc(sizeof(t_room *) * size);
+	cur = p->start;
+	index = -1;
+	while (cur)
+	{
+		size++;
+		rooms[++index] = cur;
+		cur = cur->next;
+	}
+	return (rooms);
+}
+
 int		main(int argc, char **argv)
 {
 	t_param		p;
-	t_turn		*turn;
+	t_room		**rooms;
+	int			rooms_count;
+	t_way		*way;
 
-//	rrhaenys_main(argc, argv);
-//	ft_open_win(argv[0]);
 	param_init(&p);
 	read_data(&p);
-	ft_init_len(&p);
-	ft_sotr_len(p.start);
-	if (ft_corr_rooms(p.end) == 0)
+	print_farm(&p);
+	rooms_count = ft_get_size(&p);
+	rooms = ft_get_rooms(&p, rooms_count);
+	way = a_star(p.start, p.end);
+	while (way != NULL)
 	{
-		ft_printf("There is no way!\n");
-		exit(0);
+		ft_printf("way=%s\n", way->room->name);
+		way = way->next;
 	}
-//	print_farm(&p);
-	turn = ft_init_turn_ant(p.ants, p.start);
-	while (ft_muve_turn(turn) > 0)
-		ft_printf("\n");
 	room_del(p.start);
+	free(rooms);
 	return (0);
 }
