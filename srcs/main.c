@@ -52,39 +52,6 @@ void	print_farm(t_param *p)
 	}
 }
 
-int		ft_get_size(t_param *p)
-{
-	t_room	*cur;
-	int		size;
-
-	size = 0;
-	cur = p->start;
-	while (cur)
-	{
-		size++;
-		cur = cur->next;
-	}
-	return (size);
-}
-
-t_room	**ft_get_rooms(t_param *p, int size)
-{
-	t_room	*cur;
-	t_room	**rooms;
-	int		index;
-
-	rooms = (t_room **)malloc(sizeof(t_room *) * size);
-	cur = p->start;
-	index = -1;
-	while (cur)
-	{
-		size++;
-		rooms[++index] = cur;
-		cur = cur->next;
-	}
-	return (rooms);
-}
-
 void	ft_print_way(char *str, t_way *way)
 {
 	while (way != NULL)
@@ -105,18 +72,15 @@ int		main(int argc, char **argv)
 
 	param_init(&p);
 	read_data(&p);
-	print_farm(&p);
-	rooms_count = ft_get_size(&p);
-	rooms = ft_get_rooms(&p, rooms_count);
+//	print_farm(&p);
 	way = a_star(p.start, p.end, NULL);
 	ft_print_way("way", way);
-	while (way != NULL)
+/*	while (way != NULL)
 	{
 		new_way = a_star(p.start, p.end, way->room);
 		ft_print_way("new_way", new_way);
 		way = way->next;
 	}
-	room_del(p.start);
-	free(rooms);
+*/	room_del(p.start);
 	return (0);
 }

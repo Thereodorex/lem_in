@@ -79,8 +79,7 @@ t_way	*return_way(t_room *current, t_way *way)
 	{
 //		ft_printf("way=%s\n", current->name);
 		ret = way_pushbask(ret, current, NULL);
-		if ((prev = get_way(way, current)) == NULL)
-			return (ret);
+		prev = get_way(way, current);
 		if ((prev = get_way(way, prev->from)) == NULL)
 			return (ret);
 		current = prev->room;
@@ -109,9 +108,7 @@ t_way	*a_star(t_room *start, t_room *end, t_room *old_room)
 		current = frontier->room;
 		old = way_push(old, current, NULL);
 		if (current == end)
-		{
 			return return_way(current, way);
-		}
 		index = -1;
 		while (++index < current->size)
 		{
