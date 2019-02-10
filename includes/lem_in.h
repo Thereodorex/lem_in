@@ -39,6 +39,7 @@ typedef struct	s_way
 	t_room			*room;
 	t_room			*from;
 	struct s_way	*next;
+	struct s_way	*last;
 }				t_way;
 
 typedef struct	s_ways

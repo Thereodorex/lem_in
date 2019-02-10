@@ -33,11 +33,14 @@ t_way	*way_push(t_way *way, t_room *room, t_room *from)
 	new->room = room;
 	new->from = from;
 	new->next = NULL;
+	new->last = new;
 	if (way == NULL)
 		return (new);
-	while (way->next != NULL)
-		way = way->next;
-	way->next = new;
+	way = way->last;
+	while (way->last->next != NULL)
+		way->last = way->last->next;
+	way->last->next = new;
+	way->last = new;
 	return (start);
 }
 
