@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 06:19:33 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/11 23:34:11 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 23:39:02 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -155,27 +155,6 @@ void			ft_draw_room(t_data *data, t_room *room, float scale, int color)
 	}
 }
 
-void			ft_draw_ant(t_data *data, t_room *room, float scale, int color)
-{
-	int		p_start[2];
-	char	*str;
-
-	while (room != NULL)
-	{
-		str = get_ant(data->data->way, way_len(data->data->way), data->data->step, data->data->ants, room);
-		if (str != NULL)
-		{
-			p_start[0] = WIN_W / 2 + (room->x * scale) - 5 * ft_strlen(str);
-			p_start[1] = WIN_H / 2 - (room->y * scale) - 10;
-			ft_printf("%s %s ", room->name, str);
-			mlx_string_put(data->mlx_ptr, data->mlx_win, p_start[0], p_start[1], color, str);
-			free(str);
-		}
-		room = room->next;
-	}
-	ft_putchar('\n');
-}
-
 int				ft_max_room(t_room *room)
 {
 	int	max;
@@ -240,14 +219,11 @@ int				ft_draw(t_data *data)
 			else if(data->data->old_pos[index + 1] > data->data->pos[index + 1])
 				data->data->old_pos[index + 1] -= 1;
 			mlx_string_put(data->mlx_ptr, data->mlx_win, WIN_W / 2 + data->data->old_pos[index] - 5 * ft_strlen(str), WIN_H / 2 - data->data->old_pos[index + 1] - 10, 0, str);
-//			ft_draw_px(data, data->data->old_pos[index], data->data->old_pos[index + 1], 0);
 		}
 		else
 			mlx_string_put(data->mlx_ptr, data->mlx_win, WIN_W / 2 + data->data->old_pos[index] - 5 * ft_strlen(str), WIN_H / 2 - data->data->old_pos[index + 1] - 10, 0, str);
-//			ft_draw_px(data, data->data->old_pos[index], data->data->old_pos[index + 1], 0);
 		free(str);
 		index += 2;
 	}
-//	ft_draw_ant(data, data->data->start, scale, 0);
 	return (1);
 }
