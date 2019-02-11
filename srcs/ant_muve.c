@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 17:51:28 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/11 21:01:15 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 23:04:26 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,22 @@ char	*get_ant(t_way *way, int way_size, int step, int ants, t_room *room)
 		{
 			if (way->room == room)
 				return (ft_itoa(step));
+		}
+		step--;
+		way = way->next;
+	}
+	return (NULL);
+}
+
+t_room	*get_room(t_way *way, int way_size, int step, int ants, int num)
+{
+	way = way->next;
+	while (way != NULL && step > 0)
+	{
+		if (step <= ants)
+		{
+			if (step == num)
+				return (way->room);
 		}
 		step--;
 		way = way->next;

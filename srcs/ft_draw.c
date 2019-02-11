@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 06:19:33 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/11 21:37:48 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 23:34:11 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,12 +24,9 @@ int				key_release(int key, t_data *data)
 	if (key == 53)
 		ft_close(data);
 	else if (key == 49)
-		ft_draw(data);
+		data->data->step++;
 	else if (key == 256)
-	{
-		data->data->step = -1;
-		ft_draw(data);
-	}
+		data->data->step = 0;
 	return (1);
 }
 
@@ -201,17 +198,56 @@ int				ft_draw(t_data *data)
 {
 	float	scale;
 	int		max;
+	int		index;
+	t_room	*room;
+	char	*str;
 
-	data->data->step++;
+	clearwin(data);
 	max = ft_max_room(data->data->start);
 	scale = ((WIN_W * 0.9) / (max * 2));
-	ft_printf("scale=%f max=%d\n", scale, max);
-	clearwin(data);
+//	ft_printf("scale=%f max=%d\n", scale, max);
 	ft_draw_lines(data, data->data->start, scale, 0x00ff00);
 	ft_draw_way(data, data->data->way, scale, 0x0000ff);
 	ft_draw_room(data, data->data->start, scale, 0xff0000);
+	index = 0;
+	while (index < (data->data->ants * 2))
+	{
+		room = get_room(data->data->way, way_len(data->data->way), data->data->step, data->data->ants, (index / 2 + 1));
+		if (data->data->step == 0)
+			room = data->data->p->start;
+		if (room != NULL)
+		{
+			data->data->pos[index] = room->x * scale;
+			data->data->pos[index + 1] = room->y * scale;
+		}
+		index += 2;
+	}
 	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win,
 		data->img.img_ptr, 0, 0);
-	ft_draw_ant(data, data->data->start, scale, 0);
+	index = 0;
+	while (index < (data->data->ants * 2))
+	{
+		str = ft_itoa(index / 2 + 1);
+		if (data->data->old_pos[index] != data->data->pos[index] ||
+			data->data->old_pos[index + 1] != data->data->pos[index + 1])
+		{
+			if (data->data->old_pos[index] < data->data->pos[index])
+				data->data->old_pos[index] += 1;
+			else if(data->data->old_pos[index] > data->data->pos[index])
+				data->data->old_pos[index] -= 1;
+			if (data->data->old_pos[index + 1] < data->data->pos[index + 1])
+				data->data->old_pos[index + 1] += 1;
+			else if(data->data->old_pos[index + 1] > data->data->pos[index + 1])
+				data->data->old_pos[index + 1] -= 1;
+			mlx_string_put(data->mlx_ptr, data->mlx_win, WIN_W / 2 + data->data->old_pos[index] - 5 * ft_strlen(str), WIN_H / 2 - data->data->old_pos[index + 1] - 10, 0, str);
+//			ft_draw_px(data, data->data->old_pos[index], data->data->old_pos[index + 1], 0);
+		}
+		else
+			mlx_string_put(data->mlx_ptr, data->mlx_win, WIN_W / 2 + data->data->old_pos[index] - 5 * ft_strlen(str), WIN_H / 2 - data->data->old_pos[index + 1] - 10, 0, str);
+//			ft_draw_px(data, data->data->old_pos[index], data->data->old_pos[index + 1], 0);
+		free(str);
+		index += 2;
+	}
+//	ft_draw_ant(data, data->data->start, scale, 0);
 	return (1);
 }

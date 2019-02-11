@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 19:28:41 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/11 21:25:47 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 23:04:50 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ typedef struct	s_new_data
 	t_room		*start;
 	int			step;
 	t_param		*p;
+	int			*pos;
+	float		*old_pos;
 }				t_new_data;
 
 typedef struct	s_img
@@ -54,6 +56,7 @@ void			ant_muve(t_way *way, int way_size, int step, int ants);
 void			free_ways_a(t_way *old, t_way *frontier, t_way *way);
 int				way_len(t_way *way);
 char			*get_ant(t_way *way, int way_size, int step, int ants, t_room *room);
+t_room			*get_room(t_way *way, int way_size, int step, int ants, int num);
 
 void			ft_open_win(char *str, t_param *p, t_way *way, int ants);
 int				ft_draw(t_data *data);
