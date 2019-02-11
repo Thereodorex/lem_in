@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/09 06:34:24 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 18:04:41 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,5 +72,7 @@ t_room			*pars_room(t_param *p, char *line);
 
 
 t_way			*a_star(t_room *start, t_room *end, t_room *old_room);
+void			ant_muve(t_way *way, int way_size, int step, int ants);
+void			free_ways_a(t_way *old, t_way *frontier, t_way *way);
 
 #endif

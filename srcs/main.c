@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/11 16:22:54 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 18:11:24 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -239,19 +239,17 @@ int		ways_fined(t_ways *ways, t_way *way)
 int		main(int argc, char **argv)
 {
 	t_param		p;
-	t_room		**rooms;
-	int			rooms_count;
 	t_ways		*ways;
-	t_way		*way;
 	t_way		*new_way;
 	t_room		*room;
+	int			step;
 
 	param_init(&p);
 	read_data(&p);
-//	print_farm(&p);
+	new_way = a_star(p.start, p.end, NULL);
+/*
 	ways = NULL;
-	ways = ways_push(ways, a_star(p.start, p.end, NULL));
-/*	way = ways->way[0];
+	ways = ways_push(ways, new_way);
 	room = p.start->next;
 	while (room != NULL)
 	{
@@ -261,7 +259,12 @@ int		main(int argc, char **argv)
 		room = room->next;
 	}
 	ways_update(ways);
-*/	ft_print_ways("ways", ways, p.ants);
+*/
+	step = -1;
+	while (++step < (p.ants + way_len(new_way)))
+		ant_muve(new_way, way_len(new_way), step, p.ants);
+	free_ways_a(new_way, NULL, NULL);
+//	ft_print_ways("ways", ways, p.ants);
 	room_del(p.start);
 	return (0);
 }

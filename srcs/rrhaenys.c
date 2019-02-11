@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 04:06:41 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/09 06:26:09 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 18:07:38 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,30 @@ t_way	*get_way(t_way *way, t_room *room)
 	return (way);
 }
 
+void	free_ways_a(t_way *old, t_way *frontier, t_way *way)
+{
+	t_way	*ptr;
+
+	while (old != NULL)
+	{
+		ptr = old;
+		old = old->next;
+		free(ptr);
+	}
+	while (frontier != NULL)
+	{
+		ptr = frontier;
+		frontier = frontier->next;
+		free(ptr);
+	}
+	while (way != NULL)
+	{
+		ptr = way;
+		way = way->next;
+		free(ptr);
+	}
+}
+
 t_way	*return_way(t_room *current, t_way *way)
 {
 	t_way	*prev;
@@ -80,13 +104,13 @@ t_way	*return_way(t_room *current, t_way *way)
 	current = get_way(way, current)->room;
 	while (current != NULL)
 	{
-//		ft_printf("way=%s\n", current->name);
 		ret = way_pushbask(ret, current, NULL);
 		prev = get_way(way, current);
 		if ((prev = get_way(way, prev->from)) == NULL)
-			return (ret);
+			break;
 		current = prev->room;
 	}
+	free_ways_a(NULL, NULL, way);
 	return (ret);
 }
 
@@ -96,7 +120,7 @@ t_way	*a_star(t_room *start, t_room *end, t_room *old_room)
 	t_way	*old;
 	t_way	*way;
 	t_room	*current;
-	t_way	*prev;
+	t_way	*frontier_start;
 	int		index;
 
 	frontier = NULL;
@@ -105,13 +129,17 @@ t_way	*a_star(t_room *start, t_room *end, t_room *old_room)
 	if (old_room != NULL)
 		old = way_push(old, old_room, NULL);
 	frontier = way_push(frontier, start, NULL);
+	frontier_start = frontier;
 	way = way_push(way, start, NULL);
 	while (frontier != NULL)
 	{
 		current = frontier->room;
 		old = way_push(old, current, NULL);
 		if (current == end)
+		{
+			free_ways_a(old, frontier_start, NULL);
 			return return_way(current, way);
+		}
 		index = -1;
 		while (++index < current->size)
 		{
@@ -123,5 +151,6 @@ t_way	*a_star(t_room *start, t_room *end, t_room *old_room)
 		}
 		frontier = frontier->next;
 	}
+	free_ways_a(old, frontier_start, way);
 	return (NULL);
 }
