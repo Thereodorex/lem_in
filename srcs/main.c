@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/11 19:29:56 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 21:27:20 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,8 @@ int		main(int argc, char **argv)
 	param_init(&p);
 	read_data(&p);
 	new_way = a_star(p.start, p.end, NULL);
+	if (argc > 1)
+		ft_open_win(argv[0], &p, new_way, p.ants);
 	step = -1;
 	while (++step < (p.ants + way_len(new_way)))
 		ant_muve(new_way, way_len(new_way), step, p.ants);
