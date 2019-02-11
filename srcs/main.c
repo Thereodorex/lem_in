@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/09 06:31:36 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/11 16:22:54 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,6 @@ void	print_room(t_param *p, t_room *r)
 	printf("\n");
 	printf("coord: %d %d\n", r->x, r->y);
 	printf("ants: %d\n", r->ants);
-//	printf("steps: %d\n", r->steps);
 	printf("links: %d\n", r->size);
 	i = -1;
 	while (++i < r->size)
@@ -153,7 +152,7 @@ t_ways	*ways_push(t_ways *ways, t_way *way)
 	return (start);
 }
 
-int		way_cmp(t_way *way1, t_way *way2)
+int		way_intersection(t_way *way1, t_way *way2)
 {
 	t_way	*ptr2;
 
@@ -204,7 +203,7 @@ void	ways_update(t_ways *ways)
 			fined = 1;
 			index = -1;
 			while (++index < ptr2->size)
-				if (way_cmp(ptr1->way[0], ptr2->way[index]) == 0)
+				if (way_intersection(ptr1->way[0], ptr2->way[index]) == 0)
 					fined = 0;
 			if (fined == 1)
 				ways_add(ptr2, ptr1->way[0]);
@@ -212,6 +211,29 @@ void	ways_update(t_ways *ways)
 		}
 		ptr1 = ptr1->next;
 	}
+}
+
+int		way_cmp(t_way *way1, t_way *way2)
+{
+	while (way1 != NULL && way2 != NULL && way1->room == way2->room)
+	{
+		way1 = way1->next;
+		way2 = way2->next;
+	}
+	return (way1 == NULL && way2==NULL);
+}
+
+int		ways_fined(t_ways *ways, t_way *way)
+{
+	int	index;
+	
+	while (ways != NULL)
+	{
+		if (way_cmp(ways->way[0], way) == 1)
+			return (0);
+		ways = ways->next;
+	}
+	return (1);
 }
 
 int		main(int argc, char **argv)
@@ -222,22 +244,24 @@ int		main(int argc, char **argv)
 	t_ways		*ways;
 	t_way		*way;
 	t_way		*new_way;
+	t_room		*room;
 
 	param_init(&p);
 	read_data(&p);
 //	print_farm(&p);
 	ways = NULL;
 	ways = ways_push(ways, a_star(p.start, p.end, NULL));
-	way = ways->way[0];
-	while (way != NULL)
+/*	way = ways->way[0];
+	room = p.start->next;
+	while (room != NULL)
 	{
-		new_way = a_star(p.start, p.end, way->room);
-		if (new_way != NULL)
+		new_way = a_star(p.start, p.end, room);
+		if (new_way != NULL && (ways_fined(ways, new_way) == 1))
 			ways = ways_push(ways, new_way);
-		way = way->next;
+		room = room->next;
 	}
 	ways_update(ways);
-	ft_print_ways("ways", ways, p.ants);
+*/	ft_print_ways("ways", ways, p.ants);
 	room_del(p.start);
 	return (0);
 }
