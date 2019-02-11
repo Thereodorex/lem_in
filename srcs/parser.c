@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 21:41:29 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/08 13:51:20 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/11 18:32:19 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,8 @@ void			read_data(t_param *p)
 	int		f;
 
 	pars_ants(p, &line);
+	if((ft_strlen(line) == 0))
+		STOP_IN;
 	while (line && *line)
 	{
 		if ((f = check_room(p, line)) == 1)
