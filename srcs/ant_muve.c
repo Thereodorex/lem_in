@@ -6,11 +6,12 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 17:51:28 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/11 23:39:19 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 18:56:55 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
+#include "rrhaenys.h"
 
 void	ant_muve(t_way *way, int way_size, int step, int ants)
 {
@@ -57,4 +58,22 @@ t_room	*get_room(t_way *way, int way_size, int step, int ants, int num)
 		way = way->next;
 	}
 	return (NULL);
+}
+
+void			ft_draw_way(t_data *data, t_way *way, float scale, int color)
+{
+	int		p_start[2];
+
+	while (way != NULL)
+	{
+		p_start[0] = way->room->x * scale;
+		p_start[1] = way->room->y * scale;
+		if (way->room == data->data->p->start)
+			ft_draw_square(data, p_start, 12, 0xffff00);
+		else if (way->room == data->data->p->end)
+			ft_draw_square(data, p_start, 12, 0x00ffff);
+		else
+			ft_draw_square(data, p_start, 12, color);
+		way = way->next;
+	}
 }
