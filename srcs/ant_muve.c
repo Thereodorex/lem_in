@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 17:51:28 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 19:43:40 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 19:48:25 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,16 @@
 void	ant_muve(t_way *way, int way_size, int step, int ants)
 {
 	int		index_w;
+	t_way	*start;
 	char	*str;
 	char	*nbr;
 
 	index_w = -1;
 	str = ft_strnew(1000);
 	ft_bzero(str, 1000);
+	start = way;
 	way = way->next;
-	while (way != NULL && step > 0)
+	while (way != start && step > 0)
 	{
 		if (step <= ants)
 		{
