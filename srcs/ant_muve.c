@@ -6,20 +6,22 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 17:51:28 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 19:48:25 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 20:48:34 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "rrhaenys.h"
 
-void	ant_muve(t_way *way, int way_size, int step, int ants)
+void	ant_muve(t_ways *ways, int way_size, int step, int ants)
 {
 	int		index_w;
 	t_way	*start;
 	char	*str;
 	char	*nbr;
+	t_way	*way;
 
+	way = ways->ways[0];
 	index_w = -1;
 	str = ft_strnew(1000);
 	ft_bzero(str, 1000);
@@ -46,10 +48,12 @@ void	ant_muve(t_way *way, int way_size, int step, int ants)
 	free(str);
 }
 
-t_room	*get_room(t_way *way, int way_size, int step, int ants, int num)
+t_room	*get_room(t_ways *ways, int step, int ants, int num)
 {
 	t_way	*start;
+	t_way	*way;
 
+	way = ways->ways[0];
 	start = way;
 	way = way->next;
 	while (way != start && step > 0)
@@ -63,26 +67,4 @@ t_room	*get_room(t_way *way, int way_size, int step, int ants, int num)
 		way = way->next;
 	}
 	return (NULL);
-}
-
-void			ft_draw_way(t_data *data, t_way *way, float scale, int color)
-{
-	int		p_start[2];
-	t_way	*start;
-
-	start = way;
-	p_start[0] = way->room->x * scale;
-	p_start[1] = way->room->y * scale;
-	ft_draw_square(data, p_start, 12, 0xffff00);
-	way = way->next;
-	while (way != start)
-	{
-		p_start[0] = way->room->x * scale;
-		p_start[1] = way->room->y * scale;
-		if (way->room == data->data->p->end)
-			ft_draw_square(data, p_start, 12, 0x00ffff);
-		else
-			ft_draw_square(data, p_start, 12, color);
-		way = way->next;
-	}
 }

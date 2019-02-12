@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/12 19:50:06 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 20:45:33 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,12 +108,12 @@ int		main(int argc, char **argv)
 	p.uniq_ways = MIN(p.start->l_count, p.end->l_count);
 //	print_farm(&p);
 	if (argc == 2 && (ft_strcmp(argv[1], "--v") == 0))
-		ft_open_win(argv[0], &p, (p.w_main.ways)[0], p.ants);
+		ft_open_win(argv[0], &p, &(p.w_main), p.ants);
 	else
 	{
 		index = -1;
 		while (++index < (p.ants * 2))
-			ant_muve((p.w_main.ways)[0], way_len((p.w_main.ways)[0]), index, p.ants);
+			ant_muve(&(p.w_main), way_len((p.w_main.ways)[0]), index, p.ants);
 	}
 	room_del(p.start);
 	return (0);

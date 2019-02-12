@@ -6,14 +6,14 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 19:33:36 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 19:15:48 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 20:22:52 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "rrhaenys.h"
 
-void		ft_open_win(char *str, t_param *p, t_way *way, int ants)
+void		ft_open_win(char *str, t_param *p, t_ways *ways, int ants)
 {
 	t_data	data;
 	int		index;
@@ -24,7 +24,7 @@ void		ft_open_win(char *str, t_param *p, t_way *way, int ants)
 		return ;
 	data.data = (t_new_data *)malloc(sizeof(t_new_data));
 	data.data->ants = ants;
-	data.data->way = way;
+	data.data->ways = ways;
 	data.data->start = p->start;
 	data.data->p = p;
 	data.data->step = 0;

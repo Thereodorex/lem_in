@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 06:19:33 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 19:43:26 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 20:41:28 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,15 +160,11 @@ void			ft_ants_pos(t_data *data, float scale)
 {
 	int		index;
 	t_room	*room;
-	t_way	*way;
-	int		len;
 
 	index = 0;
 	while (index < (data->data->ants * 2))
 	{
-		way = data->data->way;
-		len = way_len(way);
-		room = get_room(way, len,
+		room = get_room(data->data->ways,
 		data->data->step, data->data->ants, (index / 2 + 1));
 		if (data->data->step == 0)
 			room = data->data->p->start;
@@ -196,11 +192,11 @@ void			ft_ants_anim(t_data *data, float scale)
 			data->data->old_pos[index + 1] != data->data->pos[index + 1])
 		{
 			data->data->old_pos[index] = data->data->old_pos[index]
-			+ (data->data->old_pos[index] < data->data->pos[index])
-			- (data->data->old_pos[index] > data->data->pos[index]);
+			+ 2 * (data->data->old_pos[index] < data->data->pos[index])
+			- 2 * (data->data->old_pos[index] > data->data->pos[index]);
 			data->data->old_pos[index + 1] = data->data->old_pos[index + 1]
-			+ (data->data->old_pos[index + 1] < data->data->pos[index + 1])
-			- (data->data->old_pos[index + 1] > data->data->pos[index + 1]);
+			+ 2 * (data->data->old_pos[index + 1] < data->data->pos[index + 1])
+			- 2 * (data->data->old_pos[index + 1] > data->data->pos[index + 1]);
 		}
 		mlx_string_put(data->mlx_ptr, data->mlx_win,
 		WIN_W / 10 + data->data->old_pos[index] - 5 * ft_strlen(str),
@@ -219,7 +215,7 @@ int				ft_draw(t_data *data)
 	max = ft_max_room(data->data->start);
 	scale = ((WIN_W * 0.81) / (max));
 	ft_draw_lines(data, data->data->start, scale, 0x00ff00);
-	ft_draw_way(data, data->data->way, scale, 0x0000ff);
+	ft_draw_ways(data, data->data->ways, scale, 0x0000ff);
 	ft_draw_room(data, data->data->start, scale, 0xff0000);
 	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win,
 		data->img.img_ptr, 0, 0);
