@@ -6,12 +6,12 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 04:06:41 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 19:06:00 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 19:07:39 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
-
+/*
 int		neighbors(t_way *old, t_room *current)
 {
 	while (old != NULL)
@@ -154,3 +154,4 @@ t_way	*a_star(t_room *start, t_room *end, t_room *old_room)
 	free_ways_a(old, frontier_start, way);
 	return (NULL);
 }
+*/

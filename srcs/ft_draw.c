@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 06:19:33 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 18:55:01 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 19:43:26 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ void		ft_draw_lines(t_data *data,
 		index = -1;
 		p_start[0] = room->x * scale;
 		p_start[1] = room->y * scale;
-		while (++index < room->size)
+		while (++index < room->l_count)
 		{
 			p_fin[0] = room->links[index]->x * scale;
 			p_fin[1] = room->links[index]->y * scale;
@@ -161,12 +161,14 @@ void			ft_ants_pos(t_data *data, float scale)
 	int		index;
 	t_room	*room;
 	t_way	*way;
+	int		len;
 
 	index = 0;
 	while (index < (data->data->ants * 2))
 	{
 		way = data->data->way;
-		room = get_room(way, way_len(way),
+		len = way_len(way);
+		room = get_room(way, len,
 		data->data->step, data->data->ants, (index / 2 + 1));
 		if (data->data->step == 0)
 			room = data->data->p->start;

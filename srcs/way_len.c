@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 19:27:58 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/11 19:28:08 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 19:40:55 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,14 @@
 
 int		way_len(t_way *way)
 {
-	int	index;
+	int		index;
+	t_way	*tmp;
 
-	index = 0;
-	while (way != NULL)
+	index = 1;
+	tmp = way->next;
+	while (tmp != way)
 	{
-		way = way->next;
+		tmp = tmp->next;
 		index++;
 	}
 	return (index);
