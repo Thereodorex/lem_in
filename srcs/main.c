@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/09 06:31:36 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 18:43:28 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,13 @@ void	param_init(t_param *p)
 	p->start = NULL;
 	p->end = NULL;
 	p->ants = 0;
+	p->w_all.count = 0;
+	p->w_all.ways = NULL;
+	way_realloc(&(p->w_all));
+	p->w_main.count = 0;
+	p->w_main.ways = NULL;
+//	way_realloc(&(p->w_main));
+	p->buf.len = 0;
 }
 
 void	print_room(t_param *p, t_room *r)
@@ -31,10 +38,12 @@ void	print_room(t_param *p, t_room *r)
 	printf("\n");
 	printf("coord: %d %d\n", r->x, r->y);
 	printf("ants: %d\n", r->ants);
-//	printf("steps: %d\n", r->steps);
-	printf("links: %d\n", r->size);
+	printf("steps to end: %d\n", r->step_e);
+	printf("steps to start: %d\n", r->step_s);
+//	printf("steps to start: %d\n", r->step_s);
+	printf("way: %d\n", r->way);
 	i = -1;
-	while (++i < r->size)
+	while (++i < r->l_count)
 		printf("%s-%s\n", r->name, r->links[i]->name);
 	printf("\n");
 }
@@ -52,192 +61,50 @@ void	print_farm(t_param *p)
 	}
 }
 
-void	ft_print_way(char *str, t_way *way, int index)
+void	print_way(t_way *w)
 {
-	while (way != NULL)
+	t_way	*tmp;
+
+	if (!w)
+		return ;
+	printf("%s", w->room->name);
+	tmp = w->next;
+	while (tmp != w)
 	{
-		ft_printf("%d %s way=%s\n", index, str, way->room->name);
-		way = way->next;
+		printf(" -> %s", tmp->room->name);
+		tmp = tmp->next;
 	}
-	ft_putendl("");
+	printf("\n");
 }
 
-int		way_len(t_way *way)
+void	print_ways(t_ways *w)
 {
-	int	index;
+	int		i;
 
-	index = 0;
-	while (way != NULL)
+	if (!(w->ways))
+		return ;
+	i = -1;
+	while(++i <= w->count)
 	{
-		way = way->next;
-		index++;
-	}
-	return (index);
-}
-
-int		ways_max_len(t_ways *ways)
-{
-	int len;
-	int	index;
-	int len_i;
-
-	len = 0;
-	index = -1;
-	while (++index < ways->size)
-	{
-		len_i = way_len(ways->way[index]);
-		len = (len > len_i ? len : len_i);
-	}
-	return (len);
-}
-
-float	ways_min_par(t_ways *ways, int ants)
-{
-	float par;
-	float par_i;
-
-	par = ants / (float)ways->size + ways_max_len(ways);
-	while (ways != NULL)
-	{
-		par_i = ants / (float)ways->size + ways_max_len(ways);
-		par = (par < par_i ? par : par_i);
-		ways = ways->next;
-	}
-	return (par);
-}
-
-void	ft_print_ways(char *str, t_ways *ways, int ants)
-{
-	int		index;
-	int		max_size;
-	int		max_way_len;
-	int		way_len;
-	float	par;
-	float	min_par;
-
-	max_size = 0;
-	min_par = ways_min_par(ways, ants);
-	while (ways != NULL)
-	{
-		par = ants / (float)ways->size + ways_max_len(ways);
-		index = -1;
-		ft_putendl("____________________________________");
-		ft_printf("par:%f\n", par);
-		ft_printf("size:%d\n", ways->size);
-		ft_printf("ways_max_len:%d\n", ways_max_len(ways));
-		max_size = (max_size > ways->size ? max_size : ways->size);
-		while (++index < ways->size)
-			ft_print_way(str, ways->way[index], index);
-		ways = ways->next;
-	}
-	ft_printf("max_size:%d\n", max_size);
-	ft_printf("min par=%f\n", min_par);
-}
-
-t_ways	*ways_push(t_ways *ways, t_way *way)
-{
-	t_ways	*new;
-	t_ways	*start;
-
-	new = (t_ways *)malloc(sizeof(t_ways));
-	new->way = (t_way **)malloc(sizeof(t_way *));
-	new->way[0] = way;
-	new->next = NULL;
-	new->size = 1;
-	if (ways == NULL)
-		return (new);
-	start = ways;
-	while (ways->next != NULL)
-		ways = ways->next;
-	ways->next = new;
-	return (start);
-}
-
-int		way_cmp(t_way *way1, t_way *way2)
-{
-	t_way	*ptr2;
-
-	way1 = way1->next;
-	while (way1 != NULL)
-	{
-		ptr2 = way2->next;
-		while (ptr2 != NULL)
-		{
-			if (way1->room == ptr2->room &&
-				way1->next != NULL)
-				return (0);
-			ptr2 = ptr2->next;
-		}
-		way1 = way1->next;
-	}
-	return (1);
-}
-
-void	ways_add(t_ways *ways, t_way *way)
-{
-	t_way	**new;
-	int		index;
-
-	ways->size++;
-	new = (t_way **)malloc(sizeof(t_way *) * ways->size);
-	index = -1;
-	while (++index < (ways->size - 1))
-		new[index] = ways->way[index];
-	new[index] = way;
-	free(ways->way);
-	ways->way = new;
-}
-
-void	ways_update(t_ways *ways)
-{
-	t_ways	*ptr1;
-	t_ways	*ptr2;
-	int		index;
-	int		fined;
-
-	ptr1 = ways;
-	while (ptr1 != NULL)
-	{
-		ptr2 = ways;
-		while (ptr2 != NULL)
-		{
-			fined = 1;
-			index = -1;
-			while (++index < ptr2->size)
-				if (way_cmp(ptr1->way[0], ptr2->way[index]) == 0)
-					fined = 0;
-			if (fined == 1)
-				ways_add(ptr2, ptr1->way[0]);
-			ptr2 = ptr2->next;
-		}
-		ptr1 = ptr1->next;
+		printf("way%d: ", i);
+		print_way((w->ways)[i]);
 	}
 }
 
-int		main(int argc, char **argv)
+int		main()
 {
 	t_param		p;
-	t_room		**rooms;
-	int			rooms_count;
-	t_ways		*ways;
-	t_way		*way;
-	t_way		*new_way;
 
 	param_init(&p);
 	read_data(&p);
+	set_steps(p.end, p.start, 1, 1);
+	p.end->step_e = 0;
+	set_steps(p.start, p.end, 0, 1);
+	p.start->step_s = 0;
+	comb_ways(&p);
+	print_ways(&(p.w_main));
+	p.uniq_ways = MIN(p.start->l_count, p.end->l_count);
 //	print_farm(&p);
-	ways = NULL;
-	ways = ways_push(ways, a_star(p.start, p.end, NULL));
-	way = ways->way[0];
-	while (way != NULL)
-	{
-		new_way = a_star(p.start, p.end, way->room);
-		if (new_way != NULL)
-			ways = ways_push(ways, new_way);
-		way = way->next;
-	}
-	ways_update(ways);
-	ft_print_ways("ways", ways, p.ants);
 	room_del(p.start);
 	return (0);
 }
