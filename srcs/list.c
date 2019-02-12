@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   list.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:09:12 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/09 03:57:09 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/12 18:48:04 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,10 +23,13 @@ t_room			*room_new(char *name, int x, int y)
 	new->x = x;
 	new->y = y;
 	new->ants = 0;
-	new->size = 0;
+	new->step_e = 0x7fffffff;
+	new->step_s = 0;
+	new->ants = 0;
+	new->way = 0;
 	new->next = NULL;
+	new->l_count = 0;
 	new->links = NULL;
-	new->flag = 0;
 	return (new);
 }
 
@@ -86,6 +89,6 @@ t_room		**link_add(t_room **links, int size, t_room *new)
 
 void		room_link(t_room *room1, t_room *room2)
 {
-	room1->links = link_add(room1->links, (room1->size)++, room2);
-	room2->links = link_add(room2->links, (room2->size)++, room1);
+	room1->links = link_add(room1->links, (room1->l_count)++, room2);
+	room2->links = link_add(room2->links, (room2->l_count)++, room1);
 }
