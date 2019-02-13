@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 23:11:26 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/13 23:19:44 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,39 @@ void	get_args(t_param *p, int argc, char **argv)
 	}
 }
 
+int		*testfun(t_ways *ways, int ants)
+{
+	int		*map;
+	int		index;
+	int		line;
+
+	map = (int *)malloc(sizeof(int) * (ways->count + 2));
+	index = -1;
+	while (++index <= (ways->count + 1))
+		map[index] = 0;
+	line = 0;
+	while (ants > 0)
+	{
+		index = -1;
+		while (++index < (ways->count + 1))
+			if (way_len(ways->ways[index]) <= line && ants > 0)
+			{
+				map[index + 1]++;
+				ants--;
+			}
+		line++;
+	}
+	index = 0;
+	while (++index <= (ways->count + 1))
+		map[index] = map[index] + map[index - 1];
+	return (map);
+}
+
 int		main(int argc, char **argv)
 {
 	t_param		p;
 	int			index;
+	int			*map;
 
 	param_init(&p);
 	get_args(&p, argc, argv);
@@ -95,14 +124,14 @@ int		main(int argc, char **argv)
 	set_steps(p.start, p.end, 0, 1);
 	p.start->step_s = 0;
 	comb_ways(&p);
+	map = testfun(&(p.w_main), p.ants);
+	index = 0;
 	if (p.visual == 1)
 		ft_open_win(argv[0], &p, &(p.w_main));
 	else
-	{
-		index = 0;
-		while (ant_muve(&(p.w_main), ++index, p.ants) == 1)
+		while (ant_muve(&(p.w_main), ++index, map) == 1)
 			;
-	}
+	free(map);
 	room_del(p.start);
 	del_ways(&p.w_main);
 	return (0);
