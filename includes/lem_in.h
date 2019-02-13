@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/12 19:03:25 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 19:52:32 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,15 @@ typedef struct	s_ways
 
 typedef struct	s_param
 {
-	int		ants;
-	t_room	*start;
-	t_room	*end;
-	int		uniq_ways;
-	t_ways	w_all;
-	t_ways	w_main;;
-	t_buf	buf;
+	int				step_mode;
+	int				ants;
+	t_room			*start;
+	t_room			*end;
+	t_ways			w_all;
+	t_ways			w_main;
+	t_buf			buf;
+	unsigned int	s_limit;
+	unsigned int	b_limit;
 }				t_param;
 
 t_room			*room_new(char *name, int x, int y);
@@ -85,7 +87,7 @@ void			read_data(t_param *p);
 t_room			*pars_room(t_param *p, char *line);
 int				check_room(t_param *p, char *line);
 int				check_link(char *line);
-int				check_num(char  *line);
+int				check_num(char *line);
 
 void			set_steps(t_room *end, t_room *start, int e, int n);
 void			sort_ways(t_ways *w);
@@ -96,6 +98,7 @@ void			print_way(t_way *w);
 void			buf_print(t_param *p);
 void			buf_addstr(t_param *p, char *str);
 void			buf_step(t_param *p, int lem, char *name);
+void			move(t_param *p);
 
 void			print_farm(t_param *p);
 

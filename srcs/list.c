@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/01/21 15:09:12 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/12 18:48:04 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/13 17:00:49 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ t_room			*room_del(t_room *start)
 	return (NULL);
 }
 
-t_room		**link_add(t_room **links, int size, t_room *new)
+t_room			**link_add(t_room **links, int size, t_room *new)
 {
 	int		i;
 	t_room	**tmp;
@@ -87,7 +87,7 @@ t_room		**link_add(t_room **links, int size, t_room *new)
 	return (links);
 }
 
-void		room_link(t_room *room1, t_room *room2)
+void			room_link(t_room *room1, t_room *room2)
 {
 	room1->links = link_add(room1->links, (room1->l_count)++, room2);
 	room2->links = link_add(room2->links, (room2->l_count)++, room1);

@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 15:57:53 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/11 16:37:28 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/13 18:43:31 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void	buf_addstr(t_param *p, char *str)
 {
 	while (*str)
 	{
-		p->buf.buf[++p->buf.len] = *str++;
+		p->buf.buf[p->buf.len++] = *str++;
 		if (p->buf.len == BUF_SIZE)
 			buf_print(p);
 	}

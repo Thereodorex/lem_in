@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 20:38:51 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/12 18:56:47 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/13 16:32:09 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void		sort_links(t_room *room)
 {
-	int     i;
-	int     j;
+	int		i;
+	int		j;
 	t_room	*tmp;
 
 	i = -1;
@@ -26,7 +26,7 @@ void		sort_links(t_room *room)
 		{
 			if (room->links[j]->step_e > room->links[j + 1]->step_e ||
 				(room->links[j]->step_e == room->links[j + 1]->step_e &&
-				 room->links[j]->step_s > room->links[j + 1]->step_s))
+				room->links[j]->step_s > room->links[j + 1]->step_s))
 			{
 				tmp = room->links[j];
 				room->links[j] = room->links[j + 1];
@@ -58,7 +58,6 @@ void		set_steps(t_room *end, t_room *start, int e, int n)
 	while (++i < end->l_count)
 		if (e)
 		{
-			sort_links(end);
 			if (!end->links[i]->step_e || end->links[i]->step_e > n)
 			{
 				end->links[i]->step_e = n;
@@ -73,6 +72,5 @@ void		set_steps(t_room *end, t_room *start, int e, int n)
 				end->links[i]->step_s = n;
 				set_steps(end->links[i], start, e, n + 1);
 			}
-
 		}
 }
