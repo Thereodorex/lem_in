@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 21:41:29 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/11 18:32:19 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 16:12:49 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,6 @@ static void		check_name(t_room *start, char *line)
 t_room			*pars_room(t_param *p, char *line)
 {
 	char	*ptr;
-	t_room	*tmp;
 	int		x;
 	int		y;
 

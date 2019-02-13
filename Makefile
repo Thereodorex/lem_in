@@ -6,7 +6,7 @@
 #    By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2019/01/22 11:57:34 by jcorwin           #+#    #+#              #
-#    Updated: 2019/02/13 13:45:31 by rrhaenys         ###   ########.fr        #
+#    Updated: 2019/02/13 16:09:55 by rrhaenys         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,7 +24,7 @@ MLX = -framework OpenCL -L./minilibx_macos -lmlx -framework OpenGL -framework Ap
 all: libs $(NAME)
 
 $(NAME): $(SRC) $(INC)
-	gcc -o $(NAME) -I $(INCLUDE_PATH) -Iminilibx_macos  $(SRC) -L ./llibft/ -lft -L ./lprintf/ -lftprintf $(MLX)
+	gcc $(FLAGS) -o $(NAME) -I $(INCLUDE_PATH) -Iminilibx_macos  $(SRC) -L ./llibft/ -lft -L ./lprintf/ -lftprintf $(MLX)
 
 libs:
 	cd minilibx_macos/ && make

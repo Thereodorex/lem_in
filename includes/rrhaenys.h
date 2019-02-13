@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 19:28:41 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/13 14:47:28 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 16:28:10 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,17 +51,25 @@ typedef struct	s_data
 }				t_data;
 
 t_way			*a_star(t_room *start, t_room *end, t_room *old_room);
-void			ant_muve(t_ways *ways, int step, int ants);
+int				ant_muve(t_ways *ways, int step, int ants);
 void			free_ways_a(t_way *old, t_way *frontier, t_way *way);
 int				way_len(t_way *way);
 t_room			*get_room(t_ways *ways, int step, int ants, int num);
 
 void			ft_open_win(char *str, t_param *p, t_ways *ways);
 int				ft_draw(t_data *data);
+void			ft_draw_px(t_data *data, int x, int y, int color);
+void			ft_draw_square(t_data *data, int *pos, int rad, int color);
+void			line_fast(t_data *data, int *p1, int *p2, int color);
+void			clearwin(t_data *data);
 int				key_release(int key, t_data *data);
 int				ft_close(t_data *data);
 void			ft_draw_way(t_data *data, t_way *way, float scale, int color);
 void			ft_draw_ways(t_data *data, t_ways *ways, float scale, int color);
 void			ft_draw_square(t_data *data, int *pos, int rad, int color);
+void			ft_draw_lines(t_data *data,
+								t_room *room, float scale, int color);
+void			ft_draw_room(t_data *data, t_room *room, float scale, int color);
+void			ft_ants_anim(t_data *data, float scale);
 
 #endif

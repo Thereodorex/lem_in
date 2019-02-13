@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 14:47:37 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 17:13:53 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,6 @@ void	param_init(t_param *p)
 	way_realloc(&(p->w_all));
 	p->w_main.count = 0;
 	p->w_main.ways = NULL;
-//	way_realloc(&(p->w_main));
 	p->buf.len = 0;
 }
 
@@ -41,7 +40,6 @@ void	print_room(t_param *p, t_room *r)
 	printf("ants: %d\n", r->ants);
 	printf("steps to end: %d\n", r->step_e);
 	printf("steps to start: %d\n", r->step_s);
-//	printf("steps to start: %d\n", r->step_s);
 	printf("way: %d\n", r->way);
 	i = -1;
 	while (++i < r->l_count)
@@ -85,7 +83,7 @@ void	print_ways(t_ways *w)
 	if (!(w->ways))
 		return ;
 	i = -1;
-	while(++i <= w->count)
+	while (++i <= w->count)
 	{
 		printf("way%d: ", i);
 		print_way((w->ways)[i]);
@@ -106,16 +104,14 @@ int		main(int argc, char **argv)
 	comb_ways(&p);
 	print_ways(&(p.w_main));
 	p.uniq_ways = MIN(p.start->l_count, p.end->l_count);
-//	print_farm(&p);
 	if (argc == 2 && (ft_strcmp(argv[1], "-v") == 0))
 		ft_open_win(argv[0], &p, &(p.w_main));
 	else
 	{
 		index = 0;
-		while (++index < (p.ants * 2))
-			ant_muve(&(p.w_main), index, p.ants);
+		while (ant_muve(&(p.w_main), ++index, p.ants) == 1)
+			;
 	}
-//	free(ram);
 	room_del(p.start);
 	return (0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   alg.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 11:08:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/12 18:36:10 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/13 16:12:56 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 static int		find_way(t_room *r, int *max, int maxf)
 {
 	int     i;
-	t_room	*tmp;
 
 	if (r->step_e == 0)
 		return (1);
