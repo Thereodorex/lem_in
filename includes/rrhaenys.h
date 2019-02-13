@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 19:28:41 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/13 16:28:10 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 20:03:48 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,11 +65,13 @@ void			clearwin(t_data *data);
 int				key_release(int key, t_data *data);
 int				ft_close(t_data *data);
 void			ft_draw_way(t_data *data, t_way *way, float scale, int color);
-void			ft_draw_ways(t_data *data, t_ways *ways, float scale, int color);
+void			ft_draw_ways(t_data *data, t_ways *ways,
+								float scale, int color);
 void			ft_draw_square(t_data *data, int *pos, int rad, int color);
 void			ft_draw_lines(t_data *data,
 								t_room *room, float scale, int color);
-void			ft_draw_room(t_data *data, t_room *room, float scale, int color);
+void			ft_draw_room(t_data *data, t_room *room,
+								float scale, int color);
 void			ft_ants_anim(t_data *data, float scale);
 
 #endif

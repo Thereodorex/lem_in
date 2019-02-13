@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 11:08:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 19:53:05 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 20:04:16 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,7 +101,7 @@ void			comb_ways(t_param *p)
 
 	i = -1;
 	steps = 0;
-	while (++i < p->start->l_count && steps < p->b_limit)
+	while (++i < p->start->l_count && steps < (int)p->b_limit)
 	{
 		set_ways(i == 0 ? &p->w_main : &p->w_all, p, i, &steps);
 		if (!p->s_limit)
