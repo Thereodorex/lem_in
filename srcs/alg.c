@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 11:08:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/12 18:36:10 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/13 19:18:26 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int		find_way(t_room *r, int *max, int maxf)
 {
-	int     i;
+	int		i;
 	t_room	*tmp;
 
 	if (r->step_e == 0)
@@ -34,7 +34,7 @@ static int		find_way(t_room *r, int *max, int maxf)
 
 static void		build_way(t_way *w, t_room *r)
 {
-	int     i;
+	int		i;
 
 	if (r->step_e == 0)
 	{
@@ -49,29 +49,32 @@ static void		build_way(t_way *w, t_room *r)
 	build_way(w, r->links[i]);
 }
 
-static void		set_ways(t_ways *w, t_room *start, int iter, int *steps)
+static void		set_ways(t_ways *w, t_param *p, int iter, int *steps)
 {
 	int		i;
 	int		j;
 	int		maxf;
-	
-	start->way = 1;
-	w->count = -1;
+
+	p->start->way = 1;
 	w->ways = NULL;
 	i = iter;
-	j = start->l_count;
+	j = p->start->l_count;
 	while (j--)
 	{
 		maxf = 0;
-		if (find_way(start->links[i], &maxf, 50000000 / start->l_count))
+		if (find_way(p->start->links[i], &maxf,
+					p->s_limit ? p->s_limit / p->start->l_count : 10000000))
 		{
 			if (!(++w->count % 10))
 				way_realloc(w);
-			w->ways[w->count] = way_pushback(w->ways[w->count], way_new(start));
-			build_way(w->ways[w->count], start->links[i]);
+			w->ways[w->count] = way_pushback(w->ways[w->count],
+													way_new(p->start));
+			build_way(w->ways[w->count], p->start->links[i]);
+			if (!p->s_limit)
+				return ;
 		}
 		*steps += maxf;
-		PLUS_MAX(i, start->l_count);
+		PLUS_MAX(i, p->start->l_count);
 	}
 }
 
@@ -99,11 +102,11 @@ void			comb_ways(t_param *p)
 
 	i = -1;
 	steps = 0;
-	p->w_all.count = -1;
-	p->w_main.count = -1;
-	while (++i < p->start->l_count && steps < 100000000)
+	while (++i < p->start->l_count && steps < p->b_limit)
 	{
-		set_ways(i == 0 ? &p->w_main : &p->w_all, p->start, i, &steps);
+		set_ways(i == 0 ? &p->w_main : &p->w_all, p, i, &steps);
+		if (!p->s_limit)
+			return ;
 		if (i == 0)
 			let_it_be(&p->w_main);
 		if (p->w_all.count > p->w_main.count)
