@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 19:59:36 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 20:14:21 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ t_way			*way_cpy(t_way *from, t_way *to);
 void			way_realloc(t_ways *w);
 void			del_ways(t_ways *w);
 
-void			read_data(t_param *p);
+void			read_data(t_param *p, char *line, int f);
 t_room			*pars_room(t_param *p, char *line);
 int				check_room(t_param *p, char *line);
 int				check_link(char *line);
@@ -93,7 +93,7 @@ void			set_steps(t_room *end, t_room *start, int e, int n);
 void			sort_ways(t_ways *w);
 void			comb_ways(t_param *p);
 
-void			print_way(t_way *w);
+void			print_ways(t_ways *w);
 
 void			buf_print(t_param *p);
 void			buf_addstr(t_param *p, char *str);

@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 11:08:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 20:04:16 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 20:09:08 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static int		find_way(t_room *r, int *max, int maxf)
 {
-	int     i;
+	int	i;
 
 	if (r->step_e == 0)
 		return (1);

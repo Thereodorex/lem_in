@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 20:00:03 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 20:13:18 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,36 +27,6 @@ void	param_init(t_param *p)
 	p->s_limit = 50000000;
 	p->b_limit = 50000000;
 	p->visual = 0;
-}
-
-void	print_way(t_way *w)
-{
-	t_way	*tmp;
-
-	if (!w)
-		return ;
-	printf("%s", w->room->name);
-	tmp = w->next;
-	while (tmp != w)
-	{
-		printf(" -> %s", tmp->room->name);
-		tmp = tmp->next;
-	}
-	printf("\n");
-}
-
-void	print_ways(t_ways *w)
-{
-	int		i;
-
-	if (!(w->ways))
-		return ;
-	i = -1;
-	while (++i <= w->count)
-	{
-		printf("way%d: ", i);
-		print_way((w->ways)[i]);
-	}
 }
 
 void	set_limits(t_param *p, char *mode)
@@ -117,7 +87,7 @@ int		main(int argc, char **argv)
 
 	param_init(&p);
 	get_args(&p, argc, argv);
-	read_data(&p);
+	read_data(&p, NULL, 0);
 	set_steps(p.end, p.start, 1, 1);
 	p.end->step_e = 0;
 	set_steps(p.start, p.end, 0, 1);
