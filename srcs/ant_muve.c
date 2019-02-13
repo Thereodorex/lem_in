@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 17:51:28 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/13 17:13:36 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 22:23:35 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	ft_printf_way_step(t_way *way, int *ram, int step, char *str)
 	}
 }
 
-int		ant_muve(t_ways *ways, int step, int ants)
+int		ant_muve(t_ways *ways, int step, int *map)
 {
 	int		index;
 	char	str[1000];
@@ -61,9 +61,9 @@ int		ant_muve(t_ways *ways, int step, int ants)
 	index = -1;
 	while (++index <= (ways->count))
 	{
-		ra[0] = ants * index / (float)(ways->count + 1);
-		ra[1] = ants * (index + 1) / (float)(ways->count + 1);
-		ft_printf_way_step(ways->ways[ways->count - index], ra, step, str);
+		ra[0] = map[index];
+		ra[1] = map[index + 1];
+		ft_printf_way_step(ways->ways[index], ra, step, str);
 	}
 	ft_putstr(str);
 	if (ft_strlen(str) > 0)
@@ -99,14 +99,16 @@ t_room	*get_room(t_ways *ways, int step, int ants, int num)
 {
 	int		index;
 	int		ra[2];
+	int		*map;
 
+	map = testfun(ways, ants);
 	index = -1;
 	while (++index <= (ways->count))
 	{
-		ra[0] = ants * index / (float)(ways->count + 1);
-		ra[1] = ants * (index + 1) / (float)(ways->count + 1);
+		ra[0] = map[index];
+		ra[1] = map[index + 1];
 		if (ra[0] < num && num <= ra[1])
-			return (get_room_way(ways->ways[ways->count - index], step,
+			return (get_room_way(ways->ways[index], step,
 								ra[1] - ra[0], num - ra[0]));
 	}
 	return (NULL);
