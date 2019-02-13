@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 13:49:43 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 14:47:37 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int		main(int argc, char **argv)
 	p.uniq_ways = MIN(p.start->l_count, p.end->l_count);
 //	print_farm(&p);
 	if (argc == 2 && (ft_strcmp(argv[1], "-v") == 0))
-		ft_open_win(argv[0], &p, &(p.w_main), p.ants);
+		ft_open_win(argv[0], &p, &(p.w_main));
 	else
 	{
 		index = 0;

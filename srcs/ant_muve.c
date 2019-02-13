@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 17:51:28 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/13 14:00:46 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 14:40:12 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,6 +74,8 @@ t_room	*get_room_way(t_way	*way, int step, int ants, int num)
 	t_way	*start;
 
 	start = way;
+	if (step <= 0)
+		return (way->room);
 	way = way->next;
 	while (way != start && step > 0)
 	{

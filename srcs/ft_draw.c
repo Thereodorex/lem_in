@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 06:19:33 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/13 14:20:02 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 15:46:31 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,10 @@
 
 int				ft_close(t_data *data)
 {
+	free(data->data);
+	free(data->data->steps);
+	free(data->data->pos);
+	free(data->data->old_pos);
 	exit(0);
 	return (0);
 }
@@ -156,24 +160,18 @@ int				ft_max_room(t_room *room)
 	return (max);
 }
 
-void			ft_ants_pos(t_data *data, float scale)
+void			ft_ants_pos(t_data *data, float scale, int index, int step)
 {
-	int		index;
 	t_room	*room;
-
-	index = 0;
-	while (index < (data->data->ants * 2))
+	
+	room = get_room(data->data->ways,
+	step, data->data->p->ants, (index / 2 + 1));
+	if (data->data->step == 0)
+		room = data->data->p->start;
+	if (room != NULL)
 	{
-		room = get_room(data->data->ways,
-		data->data->step, data->data->ants, (index / 2 + 1));
-		if (data->data->step == 0)
-			room = data->data->p->start;
-		if (room != NULL)
-		{
-			data->data->pos[index] = room->x * scale;
-			data->data->pos[index + 1] = room->y * scale;
-		}
-		index += 2;
+		data->data->pos[index] = room->x * scale;
+		data->data->pos[index + 1] = room->y * scale;
 	}
 }
 
@@ -186,9 +184,8 @@ void			ft_ants_anim(t_data *data, float scale)
 	float	dy;
 	float	d;
 
-	ft_ants_pos(data, scale);
 	index = 0;
-	while (index < (data->data->ants * 2))
+	while (index < (data->data->p->ants * 2))
 	{
 		str = ft_itoa(index / 2 + 1);
 		dx = data->data->old_pos[index] - data->data->pos[index];
@@ -198,14 +195,30 @@ void			ft_ants_anim(t_data *data, float scale)
 			d = dy / dx;
 		if (d < 0)
 			d = -d;
-		if (data->data->old_pos[index] != data->data->pos[index])
+		if (data->data->old_pos[index] != data->data->pos[index] ||
+			data->data->old_pos[index + 1] != data->data->pos[index + 1])
+		{
+//			ft_printf("steps=%d step=%d\n", data->data->steps[index / 2], data->data->step);
 			data->data->old_pos[index] = data->data->old_pos[index] + 1 *
 			((data->data->old_pos[index] < data->data->pos[index])
 			- (data->data->old_pos[index] > data->data->pos[index]));
-		if (data->data->old_pos[index + 1] != data->data->pos[index + 1])
 			data->data->old_pos[index + 1] = data->data->old_pos[index + 1] + d *
 			((data->data->old_pos[index + 1] < data->data->pos[index + 1])
 			- (data->data->old_pos[index + 1] > data->data->pos[index + 1]));
+		}
+		else
+		{
+			if (data->data->steps[index / 2] < data->data->step)
+			{
+				data->data->steps[index / 2]++;
+//				ft_printf("steps=%d step=%d\n", data->data->steps[index / 2], data->data->step);
+				ft_ants_pos(data, scale, index, data->data->steps[index / 2]);
+			}
+			else if (data->data->step == 0)
+			{
+				data->data->steps[index / 2] = -1;
+			}
+		}
 		mlx_string_put(data->mlx_ptr, data->mlx_win,
 		WIN_W / 10 + data->data->old_pos[index] - 5 * ft_strlen(str),
 		WIN_H * 9 / 10 - data->data->old_pos[index + 1] - 10, 0, str);
@@ -218,15 +231,23 @@ int				ft_draw(t_data *data)
 {
 	float	scale;
 	int		max;
+	char	*step;
 
 	clearwin(data);
-	max = ft_max_room(data->data->start);
+	max = ft_max_room(data->data->p->start);
 	scale = ((WIN_W * 0.81) / (max));
-	ft_draw_lines(data, data->data->start, scale, 0x00ff00);
+	ft_draw_lines(data, data->data->p->start, scale, 0x00ff00);
 	ft_draw_ways(data, data->data->ways, scale, 0x0000ff);
-	ft_draw_room(data, data->data->start, scale, 0xff0000);
+	ft_draw_room(data, data->data->p->start, scale, 0xff0000);
 	mlx_put_image_to_window(data->mlx_ptr, data->mlx_win,
 		data->img.img_ptr, 0, 0);
 	ft_ants_anim(data, scale);
+	step = ft_itoa(data->data->step);
+	mlx_string_put(data->mlx_ptr, data->mlx_win, WIN_W / 2 - 50, 5, 0, "step = ");
+	mlx_string_put(data->mlx_ptr, data->mlx_win, WIN_W / 2 + 15, 5, 0, step);
+	mlx_string_put(data->mlx_ptr, data->mlx_win, 10, 5, 0, "space step++");
+	mlx_string_put(data->mlx_ptr, data->mlx_win, 10, 25, 0, "ctrl step = 0");
+	mlx_string_put(data->mlx_ptr, data->mlx_win, 10, 45, 0, "esc to exit");
+	free(step);
 	return (1);
 }

@@ -6,14 +6,14 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 19:33:36 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 20:22:52 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 15:28:16 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "rrhaenys.h"
 
-void		ft_open_win(char *str, t_param *p, t_ways *ways, int ants)
+void		ft_open_win(char *str, t_param *p, t_ways *ways)
 {
 	t_data	data;
 	int		index;
@@ -23,11 +23,13 @@ void		ft_open_win(char *str, t_param *p, t_ways *ways, int ants)
 		mlx_new_window(data.mlx_ptr, WIN_W, WIN_H, str)) == NULL))
 		return ;
 	data.data = (t_new_data *)malloc(sizeof(t_new_data));
-	data.data->ants = ants;
-	data.data->ways = ways;
-	data.data->start = p->start;
-	data.data->p = p;
 	data.data->step = 0;
+	data.data->steps = (int *)malloc(sizeof(int) * p->ants);
+	index = -1;
+	while (++index < (p->ants))
+		data.data->steps[index] = data.data->step - 1;
+	data.data->ways = ways;
+	data.data->p = p;
 	data.data->pos = (int *)malloc(sizeof(int) * (p->ants * 2));
 	data.data->old_pos = (float *)malloc(sizeof(float) * (p->ants * 2));
 	index = 0;
