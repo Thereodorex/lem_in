@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 11:08:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 20:09:08 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 23:10:37 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,5 +117,7 @@ void			comb_ways(t_param *p)
 		}
 		else
 			del_ways(&(p->w_all));
+		if (way_enough(p))
+			return ;
 	}
 }

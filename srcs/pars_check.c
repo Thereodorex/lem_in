@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 23:03:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 16:39:24 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/13 22:50:58 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,6 @@ static void		check_sharp(t_param *p, char *line, int *start)
 		p->end = tmp;
 		p->start = room_pushback(p->start, tmp);
 	}
-	else
-		STOP_IN;
 	free(line2);
 }
 
@@ -85,19 +83,13 @@ int				check_num(char *line)
 int				check_link(char *line)
 {
 	if (*line == '#')
-	{
-		if (*(line + 1) == '#')
-			STOP_IN;
 		return (2);
-	}
-	while (*line && *line != ' ' && *line != '-')
+	while (*line && *line != '-')
 		line++;
 	if (*line++ != '-')
-		return (0);
-	while (*line && *line != ' ' && *line != '-')
-		line++;
-	if (*line)
-		return (0);
+		STOP_IN;
+	if (!(*line))
+		STOP_IN;
 	return (1);
 }
 
@@ -106,25 +98,25 @@ int				check_room(t_param *p, char *line)
 	int			i;
 	static int	start = 0;
 
-	if (*line == '#')
-	{
-		if (*(line + 1) == '#')
-			check_sharp(p, line, &start);
-		return (0);
-	}
-	if (check_link(line))
+	if (*line == 'L')
 		return (2);
+	if (*line == '#' && *(line + 1) == '#')
+		check_sharp(p, line, &start);
+	if (*line == '#')
+		return (0);
 	while (*line && *line != ' ')
 		++line;
 	if (*line++ != ' ')
-		STOP_IN;
-	i = 1;
-	while (++i < 4)
+		return (2);
+	i = 0;
+	while (++i < 3)
 	{
+		if (*line == '-')
+			++line;
 		while (ft_isdigit(*line))
 			++line;
-		if (i == 3 ? *line : *line++ != ' ')
-			STOP_IN;
+		if (i == 1 ? *line++ != ' ' : *line)
+			return (2);
 	}
 	return (1);
 }

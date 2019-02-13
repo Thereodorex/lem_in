@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/09 20:38:51 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 16:32:09 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/13 23:13:52 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,38 @@ void		sort_links(t_room *room)
 			}
 		}
 	}
+}
+
+void		way_steps(t_param *p)
+{
+	int		i;
+	int		j;
+	t_way	*way;
+
+	i = -1;
+	while (++i <= p->w_main.count)
+	{
+		way = p->w_main.ways[i]->prev->prev;
+		j = 1;
+		while (way->room != p->start)
+		{
+			way->steps = j++;
+			way = way->prev;
+		}
+	}
+}
+
+int			way_enough(t_param *p)
+{
+	int		sum;
+	int		i;
+
+	i = -1;
+	sum = 0;
+	way_steps(p);
+	while (++i <= p->w_main.count)
+		sum += p->w_main.ways[i]->next->steps;
+	return (sum >= p->ants ? 1 : 0);
 }
 
 void		del_ways(t_ways *w)

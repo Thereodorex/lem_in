@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 20:13:18 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 23:11:26 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,12 +88,13 @@ int		main(int argc, char **argv)
 	param_init(&p);
 	get_args(&p, argc, argv);
 	read_data(&p, NULL, 0);
+	if (!p.start || !p.end)
+		STOP_IN;
 	set_steps(p.end, p.start, 1, 1);
 	p.end->step_e = 0;
 	set_steps(p.start, p.end, 0, 1);
 	p.start->step_s = 0;
 	comb_ways(&p);
-	print_ways(&(p.w_main));
 	if (p.visual == 1)
 		ft_open_win(argv[0], &p, &(p.w_main));
 	else

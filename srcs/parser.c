@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 21:41:29 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 20:07:30 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 22:47:59 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ static void		pars_link(t_param *p, char *line)
 	t_room	*l1;
 	t_room	*l2;
 	char	*ptr;
+	int		i;
 
 	ptr = line;
 	while (*ptr != '-')
@@ -28,8 +29,12 @@ static void		pars_link(t_param *p, char *line)
 		l1 = l1->next;
 	while (l2 && ft_strcmp(l2->name, ptr))
 		l2 = l2->next;
-	if (!l1 || !l2)
+	if (!l1 || !l2 || l1 == l2)
 		STOP_IN;
+	i = -1;
+	while (++i < l1->l_count)
+		if (l1->links[i] == l2)
+			STOP_IN;
 	room_link(l1, l2);
 }
 
@@ -93,12 +98,10 @@ void			read_data(t_param *p, char *line, int f)
 		if ((get_next_line(0, &line)) == -1)
 			STOP;
 	}
-	while (line && *line)
+	while (line)
 	{
 		if ((f = check_link(line)) == 1)
 			pars_link(p, line);
-		else if (f == o)
-			STOP_IN;
 		ft_strdel(&line);
 		if ((get_next_line(0, &line)) == -1)
 			STOP;
