@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 19:28:41 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 20:45:42 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 13:49:54 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ typedef struct	s_data
 }				t_data;
 
 t_way			*a_star(t_room *start, t_room *end, t_room *old_room);
-void			ant_muve(t_ways *ways, int way_size, int step, int ants);
+void			ant_muve(t_ways *ways, int step, int ants);
 void			free_ways_a(t_way *old, t_way *frontier, t_way *way);
 int				way_len(t_way *way);
 t_room			*get_room(t_ways *ways, int step, int ants, int num);

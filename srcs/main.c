@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/12 20:53:24 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 13:49:43 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,10 +111,11 @@ int		main(int argc, char **argv)
 		ft_open_win(argv[0], &p, &(p.w_main), p.ants);
 	else
 	{
-		index = -1;
+		index = 0;
 		while (++index < (p.ants * 2))
-			ant_muve(&(p.w_main), way_len((p.w_main.ways)[0]), index, p.ants);
+			ant_muve(&(p.w_main), index, p.ants);
 	}
+//	free(ram);
 	room_del(p.start);
 	return (0);
 }

@@ -6,54 +6,73 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/11 17:51:28 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 20:48:34 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 14:00:46 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 #include "rrhaenys.h"
 
-void	ant_muve(t_ways *ways, int way_size, int step, int ants)
+void	ft_printf_step(char	*str, int step, char *name)
 {
-	int		index_w;
-	t_way	*start;
-	char	*str;
 	char	*nbr;
-	t_way	*way;
+	int		i;
 
-	way = ways->ways[0];
-	index_w = -1;
-	str = ft_strnew(1000);
-	ft_bzero(str, 1000);
-	start = way;
-	way = way->next;
-	while (way != start && step > 0)
+	if (ft_strlen(str) > 0)
+		ft_strcat(str, " ");
+	if (ft_strlen(str) >= 900)
 	{
-		if (step <= ants)
+		ft_putstr(str);
+		ft_bzero(str, 1000);
+	}
+	ft_strcat(str, "L");
+	nbr = ft_itoa(step);
+	ft_strcat(str, nbr);
+	free(nbr);
+	ft_strcat(str, "-");
+	ft_strcat(str, name);
+}
+
+void	ft_printf_way_step(t_way *way, int *ram, int step, char *str)
+{
+	t_way	*way_start;
+
+	way_start = way;
+	way = way->next;
+	while (way != way_start && step > 0)
+	{
+		if (step <= (ram[1] - ram[0]))
 		{
-			if (ft_strlen(str) > 0)
-				ft_strcat(str, " ");
-			ft_strcat(str, "L");
-			nbr = ft_itoa(step);
-			ft_strcat(str, nbr);
-			free(nbr);
-			ft_strcat(str, "-");
-			ft_strcat(str, way->room->name);
+			ft_printf_step(str, (step + ram[0]), way->room->name);
 		}
 		step--;
 		way = way->next;
 	}
-	if (ft_strlen(str) > 0)
-		ft_putendl(str);
-	free(str);
 }
 
-t_room	*get_room(t_ways *ways, int step, int ants, int num)
+void	ant_muve(t_ways *ways, int step, int ants)
+{
+	int		index;
+	char	str[1000];
+	int		ra[2];
+
+	bzero(str, 1000);
+	index = -1;
+	while (++index <= (ways->count))
+	{
+		ra[0] = ants * index / (float)(ways->count + 1);
+		ra[1] = ants * (index + 1) / (float)(ways->count + 1);
+		ft_printf_way_step(ways->ways[index], ra, step, str);
+	}
+	ft_putstr(str);
+	if (ft_strlen(str) > 0)
+		ft_putchar('\n');
+}
+
+t_room	*get_room_way(t_way	*way, int step, int ants, int num)
 {
 	t_way	*start;
-	t_way	*way;
 
-	way = ways->ways[0];
 	start = way;
 	way = way->next;
 	while (way != start && step > 0)
@@ -65,6 +84,23 @@ t_room	*get_room(t_ways *ways, int step, int ants, int num)
 		}
 		step--;
 		way = way->next;
+	}
+	return (NULL);
+}
+
+
+t_room	*get_room(t_ways *ways, int step, int ants, int num)
+{
+	int		index;
+	int		ra[2];
+
+	index = -1;
+	while (++index <= (ways->count))
+	{
+		ra[0] = ants * index / (float)(ways->count + 1);
+		ra[1] = ants * (index + 1) / (float)(ways->count + 1);
+		if (ra[0] < num && num <= ra[1])
+			return (get_room_way(ways->ways[index], step, ra[1] - ra[0], num - ra[0]));
 	}
 	return (NULL);
 }
