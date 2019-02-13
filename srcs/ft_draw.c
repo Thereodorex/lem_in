@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/05 06:19:33 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/12 20:41:28 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 14:20:02 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,22 +182,30 @@ void			ft_ants_anim(t_data *data, float scale)
 	int		index;
 	t_room	*room;
 	char	*str;
+	float	dx;
+	float	dy;
+	float	d;
 
 	ft_ants_pos(data, scale);
 	index = 0;
 	while (index < (data->data->ants * 2))
 	{
 		str = ft_itoa(index / 2 + 1);
-		if (data->data->old_pos[index] != data->data->pos[index] ||
-			data->data->old_pos[index + 1] != data->data->pos[index + 1])
-		{
-			data->data->old_pos[index] = data->data->old_pos[index]
-			+ 2 * (data->data->old_pos[index] < data->data->pos[index])
-			- 2 * (data->data->old_pos[index] > data->data->pos[index]);
-			data->data->old_pos[index + 1] = data->data->old_pos[index + 1]
-			+ 2 * (data->data->old_pos[index + 1] < data->data->pos[index + 1])
-			- 2 * (data->data->old_pos[index + 1] > data->data->pos[index + 1]);
-		}
+		dx = data->data->old_pos[index] - data->data->pos[index];
+		dy = data->data->old_pos[index + 1] - data->data->pos[index + 1];
+		d = 1;
+		if (dx != 0)
+			d = dy / dx;
+		if (d < 0)
+			d = -d;
+		if (data->data->old_pos[index] != data->data->pos[index])
+			data->data->old_pos[index] = data->data->old_pos[index] + 1 *
+			((data->data->old_pos[index] < data->data->pos[index])
+			- (data->data->old_pos[index] > data->data->pos[index]));
+		if (data->data->old_pos[index + 1] != data->data->pos[index + 1])
+			data->data->old_pos[index + 1] = data->data->old_pos[index + 1] + d *
+			((data->data->old_pos[index + 1] < data->data->pos[index + 1])
+			- (data->data->old_pos[index + 1] > data->data->pos[index + 1]));
 		mlx_string_put(data->mlx_ptr, data->mlx_win,
 		WIN_W / 10 + data->data->old_pos[index] - 5 * ft_strlen(str),
 		WIN_H * 9 / 10 - data->data->old_pos[index + 1] - 10, 0, str);
