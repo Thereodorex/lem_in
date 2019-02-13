@@ -1,0 +1,27 @@
+5
+#rooms step
+##start
+x17y3 17 3
+x22y6 22 6
+x17y8 17 8
+x26y8 26 8
+x12y11 12 11
+x22y11 22 11
+x17y14 17 14
+x26y14 26 14
+x22y16 22 16
+##end
+x17y20 17 20
+#pipes step
+x26y14-x22y16
+x26y8-x26y14
+x22y6-x26y8
+x22y16-x17y20
+x22y11-x22y16
+x22y6-x22y11
+x17y3-x22y6
+x12y11-x17y20
+x17y3-x12y11
+x17y14-x17y20
+x17y8-x17y14
+x17y3-x17y8
