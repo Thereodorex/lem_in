@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 16:08:51 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/13 17:11:33 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/13 18:51:02 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 void			ft_ants_pos(t_data *data, float scale, int index, int step)
 {
 	t_room	*room;
-	
+
 	room = get_room(data->data->ways,
 	step, data->data->p->ants, (index / 2 + 1));
 	if (data->data->step == 0)
@@ -55,8 +55,9 @@ void			ft_draw_ant(t_data *data, int index)
 
 	str = ft_itoa(index / 2 + 1);
 	mlx_string_put(data->mlx_ptr, data->mlx_win,
-	WIN_W / 10 + data->data->old_pos[index] - 5 * ft_strlen(str),
-	WIN_H * 9 / 10 - data->data->old_pos[index + 1] - 10, 0, str);
+	(WIN_W / 10) + data->data->old_pos[index] - (5 * ft_strlen(str)),
+	(int)(WIN_H) * 9 / 10 - data->data->old_pos[index + 1] - 10,
+	0, str);
 	free(str);
 }
 
@@ -72,7 +73,7 @@ void			ft_ants_anim(t_data *data, float scale)
 	{
 		dx = data->data->old_pos[index] - data->data->pos[index];
 		dy = data->data->old_pos[index + 1] - data->data->pos[index + 1];
-		d = dy / (dx + dy * (dx ==0));
+		d = dy / (dx + dy * (dx == 0));
 		d = d * (1 - 2 * (d < 0));
 		if (data->data->old_pos[index] != data->data->pos[index] ||
 			data->data->old_pos[index + 1] != data->data->pos[index + 1])
