@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 20:13:13 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/14 13:25:21 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 23:08:19 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,13 @@ void		print_ways(t_ways *w)
 	if (!(w->ways))
 		return ;
 	i = -1;
+	ft_printf("\n");
 	while (++i <= w->count)
 	{
 		ft_printf("way%d: ", i);
 		print_way((w->ways)[i]);
 	}
+	ft_printf("\n");
 }
 
 void		check_ways(t_param *p)

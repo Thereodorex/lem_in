@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/03 17:55:49 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/02 17:42:10 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 23:11:39 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,5 +52,6 @@ int				get_next_line(const int fd, char **line)
 			free(*line);
 		return (-1);
 	}
+	ft_printf("%s\n", *line ? *line : "");
 	return (res);
 }

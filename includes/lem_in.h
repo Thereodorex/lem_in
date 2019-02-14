@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/14 13:31:25 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 23:03:25 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ typedef struct	s_ways
 typedef struct	s_param
 {
 	int				visual;
+	int				print_ways;
 	int				ants;
 	t_room			*start;
 	t_room			*end;
