@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/14 13:31:25 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 22:59:26 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,5 +102,6 @@ void			buf_print(t_param *p);
 void			buf_addstr(t_param *p, char *str);
 void			buf_step(t_param *p, int lem, char *name);
 void			move(t_param *p);
+void			ft_print_all(t_param *p, char *name);
 
 #endif

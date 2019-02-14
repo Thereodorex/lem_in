@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/14 21:06:53 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/14 22:59:17 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,8 +111,6 @@ int		*testfun(t_ways *ways, int ants)
 int		main(int argc, char **argv)
 {
 	t_param		p;
-	int			index;
-	int			*map;
 
 	param_init(&p);
 	get_args(&p, argc, argv);
@@ -125,14 +123,7 @@ int		main(int argc, char **argv)
 	p.start->step_s = 0;
 	comb_ways(&p);
 	check_ways(&p);
-	map = testfun(&(p.w_main), p.ants);
-	index = 0;
-	if (p.visual == 1)
-		ft_open_win(argv[0], &p, &(p.w_main));
-	else
-		while (ant_muve(&(p.w_main), ++index, map) == 1)
-			;
-	free(map);
+	ft_print_all(&p, argv[0]);
 	room_del(p.start);
 	del_ways(&p.w_main);
 	return (0);
