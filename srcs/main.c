@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/14 22:59:17 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/14 23:14:22 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,7 @@ void	param_init(t_param *p)
 	p->s_limit = 50000000;
 	p->b_limit = 50000000;
 	p->visual = 0;
+	p->print_ways = 0;
 }
 
 void	set_limits(t_param *p, char *mode)
@@ -75,6 +76,8 @@ void	get_args(t_param *p, int argc, char **argv)
 			ft_printf("usage: lim-in [-help] [-v] [-s] [-d [0-5]]\n");
 			exit(0);
 		}
+		else if (!ft_strcmp(argv[i], "-w"))
+			p->print_ways = 1;
 		else
 			STOP_IN;
 	}
@@ -124,6 +127,8 @@ int		main(int argc, char **argv)
 	comb_ways(&p);
 	check_ways(&p);
 	ft_print_all(&p, argv[0]);
+	if (p.print_ways)
+		print_ways(&p.w_main);
 	room_del(p.start);
 	del_ways(&p.w_main);
 	return (0);

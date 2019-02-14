@@ -6,7 +6,7 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/12/01 13:05:59 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/02 17:17:38 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 23:06:36 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include "libft.h"
+# include "ft_printf.h"
 
 # define BUFF_SIZE 32
 
