@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 21:41:29 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/14 13:39:10 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 21:29:40 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ t_room			*pars_room(t_param *p, char *line)
 void			read_data(t_param *p, char *line, int f)
 {
 	pars_ants(p, &line);
-	if ((ft_strlen(line) == 0))
+	if (line == NULL || (ft_strlen(line) == 0))
 		STOP_IN;
 	while (line && *line)
 	{
@@ -98,7 +98,7 @@ void			read_data(t_param *p, char *line, int f)
 		if ((get_next_line(0, &line)) == -1)
 			STOP;
 	}
-	if (p->buf.len != 1 || p->end)
+	if (p->buf.len != 1 || !p->end)
 		STOP_IN;
 	p->buf.len = 0;
 	while (line)

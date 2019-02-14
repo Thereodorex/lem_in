@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pars_check.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 23:03:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/14 13:31:27 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 21:41:07 by rrhaenys         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,8 @@ int				check_num(char *line)
 	while (*line == ' ')
 		++line;
 	num = ft_atoi(line);
+	if (num < 0 && *line != '-')
+		return (-1);
 	i = 0;
 	if (*line == '-' || *line == '+')
 		*line == '-' && num != 0 ? back_num[i++] = *line : *line++;
@@ -74,9 +76,9 @@ int				check_num(char *line)
 	while (tmp /= 10)
 		++i;
 	back_num[i + 1] = '\0';
-	back_num[i] = MOD(num % 10) + '0';
+	back_num[i] = MOD((num % 10)) + '0';
 	while (num /= 10)
-		back_num[--i] = MOD(num % 10) + '0';
+		back_num[--i] = MOD((num % 10)) + '0';
 	return (num_cmp(line, back_num));
 }
 
@@ -100,7 +102,8 @@ int				check_room(t_param *p, char *line)
 	if (*line == 'L')
 		return (2);
 	if (*line == '#' && *(line + 1) == '#')
-		check_sharp(p, line);
+		if (!ft_strcmp(line, "##start") || !ft_strcmp(line, "##end"))
+			check_sharp(p, line);
 	if (*line == '#')
 		return (0);
 	while (*line && *line != ' ')
