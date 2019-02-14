@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/13 20:13:13 by rrhaenys          #+#    #+#             */
-/*   Updated: 2019/02/13 20:14:41 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/14 13:25:21 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,4 +41,10 @@ void		print_ways(t_ways *w)
 		ft_printf("way%d: ", i);
 		print_way((w->ways)[i]);
 	}
+}
+
+void		check_ways(t_param *p)
+{
+	if (p->w_main.ways == NULL || p->w_main.ways[0] == NULL)
+		STOP_IN;
 }

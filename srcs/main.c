@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 11:11:22 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 23:19:44 by rrhaenys         ###   ########.fr       */
+/*   Updated: 2019/02/14 13:31:23 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,6 +124,7 @@ int		main(int argc, char **argv)
 	set_steps(p.start, p.end, 0, 1);
 	p.start->step_s = 0;
 	comb_ways(&p);
+	check_ways(&p);
 	map = testfun(&(p.w_main), p.ants);
 	index = 0;
 	if (p.visual == 1)

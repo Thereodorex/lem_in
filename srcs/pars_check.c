@@ -6,18 +6,18 @@
 /*   By: jcorwin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/07 23:03:54 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 22:50:58 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 13:31:27 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "lem_in.h"
 
-static void		check_sharp(t_param *p, char *line, int *start)
+static void		check_sharp(t_param *p, char *line)
 {
 	char		*line2;
 	t_room		*tmp;
 
-	if (!ft_strcmp(line, "##start") && ++(*start) != 1)
+	if (!ft_strcmp(line, "##start") && ++(p->buf.len) != 1)
 		STOP_IN;
 	if ((get_next_line(0, &line2)) == -1)
 		STOP;
@@ -96,12 +96,11 @@ int				check_link(char *line)
 int				check_room(t_param *p, char *line)
 {
 	int			i;
-	static int	start = 0;
 
 	if (*line == 'L')
 		return (2);
 	if (*line == '#' && *(line + 1) == '#')
-		check_sharp(p, line, &start);
+		check_sharp(p, line);
 	if (*line == '#')
 		return (0);
 	while (*line && *line != ' ')

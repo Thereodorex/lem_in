@@ -6,7 +6,7 @@
 /*   By: rrhaenys <rrhaenys@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2019/02/03 15:02:37 by jcorwin           #+#    #+#             */
-/*   Updated: 2019/02/13 23:06:14 by jcorwin          ###   ########.fr       */
+/*   Updated: 2019/02/14 13:31:25 by jcorwin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -96,6 +96,7 @@ void			way_steps(t_param *p);
 int				way_enough(t_param *p);
 
 void			print_ways(t_ways *w);
+void			check_ways(t_param *p);
 
 void			buf_print(t_param *p);
 void			buf_addstr(t_param *p, char *str);
